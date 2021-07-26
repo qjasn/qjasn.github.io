@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" class="ios">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+	<title>Nav</title>
+	<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+	<script src="//cdn.jsdelivr.net/npm/eruda-code"></script>
+
+	<script>
+		eruda.init();
+		eruda.add(erudaCode);
+	</script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/marked/2.0.3/marked.js"></script>
+	<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+	<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+	<link rel="stylesheet" href="./style.css" />
+	<link rel="stylesheet" href="./sspai.css" />
+	<script type="module">
+		import {
+				modalController,
+				alertController,
+				menuController,
+				loadingController
+			} from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+			window.modalController = modalController;
+			window.alertController = alertController;
+			window.menuController = menuController;
+			window.loadingController = loadingController;
+	</script>
+	<script>
+	</script>
+</head>
+
+<body onload="">
+	<div class="in" onclick="showupdate()">
+		<p style="color:gray" id="title">system</p>
+		<p id="content">hello world</p>
+	</div>
+	<div id="ionIon">
+		<ion-app id="ionApp" class="">
+			<ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main-content">
+				<ion-header>
+					<ion-toolbar color="">
+						<ion-title>menu</ion-title>
+					</ion-toolbar>
+				</ion-header>
+				<ion-content>
+					<ion-list>
+						<ion-item onclick="GoToPage('home')">Home</ion-item>
+						<ion-item onclick="GoToPage('passage-home')">Passage</ion-item>
+					</ion-list>
+				</ion-content>
+			</ion-menu>
+			<div class="ion-page" id="main-content">
+				<ion-nav id="tab-ion" root="tab-page">
+				</ion-nav>
+			</div>
+		</ion-app>
+		<div class="passage">
+			<ion-nav id="cbl-c" root="cbl-p">
+			</ion-nav>
+		</div>
+	</div>
+	<script id="tab" type="text/template">
+		<ion-tabs>
+			<ion-tab tab="home">
+				<ion-nav root="nav-home" id="ion-nav"></ion-nav>
+			</ion-tab>
+			
+			<ion-tab tab="set">
+				<ion-nav root="nav-set" id="ion-set"></ion-nav>
+			</ion-tab>
+			
+			<ion-tab-bar slot="bottom">
+				<ion-tab-button tab="home">
+					<ion-label>主页</ion-label>
+					<ion-icon name="storefront-outline"></ion-icon>
+				</ion-tab-button>
+				<ion-tab-button tab="set">
+					<ion-label>设置</ion-label>
+					<ion-icon name="cog-outline"></ion-icon>
+				</ion-tab-button>
+			</ion-tab-bar>
+		</ion-tabs>
+	</script>
+	<script id="cbl" type="text/template">
+		<ion-content><div id="p"><p style="font-size: 60px;color:gray">hello</p></div></ion-content>
+	</script>
+	<script id="set" type="text/template">
+		<ion-header translucent>
+			<ion-toolbar>
+				<ion-title>设置</ion-title>
+			</ion-toolbar>
+		</ion-header>
+						
+		<ion-content fullscreen class="ion-padding">
+			<h1>设置</h1>
+			<ion-list>
+				<ion-item lines="full">
+					<ion-icon slot="start" name="moon"></ion-icon>
+					<ion-label>
+						切换暗黑模式
+					</ion-label>
+					<ion-toggle id="themeToggle" slot="end"></ion-toggle>
+				</ion-item>
+				<ion-item lines="full" onclick="if(display=='iphone'){setnav.push('set-page')}else{pn.popToRoot();pn.push('set-page')}">
+					<ion-label>更新日志</ion-label>
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</script>
+	<script id="page" type="text/template">
+		<ion-header translucent>
+			<ion-toolbar>
+				<ion-title>主页</ion-title>
+				<ion-buttons slot="start">
+					<ion-menu-button></ion-menu-button>
+				</ion-buttons>
+			</ion-toolbar>
+		</ion-header>
+
+		<ion-content fullscreen class="ion-padding">
+			<h1>主页</h1>
+			<ion-card>
+				<ion-card-header>
+					<ion-card-subtitle>2.12</ion-card-subtitle>
+					<ion-card-title>网站1.0版本建立</ion-card-title>
+				</ion-card-header>
+			</ion-card>
+			<ion-card>
+				<ion-card-header>
+					<ion-card-subtitle>5.15</ion-card-subtitle>
+					<ion-card-title>网站2.0版本更新</ion-card-title>
+				</ion-card-header>
+			</ion-card>
+		</ion-content>
+	</script>
+	<script id="page1" type="text/template">
+		<ion-header translucent>
+				<ion-toolbar>
+					<ion-title>hello</ion-title>
+					<ion-buttons slot="start">
+						<ion-back-button defaultHref="/"></ion-back-button>
+					</ion-buttons>
+				</ion-toolbar>
+			</ion-header>
+			<ion-content fullscreen>
+				<div id="passage" class="ion-padding"></div>
+			</ion-content>
+			</script>
+	<script id="modal" type="text/template">
+		<ion-nav id="nav-modal" root="modal-page"></ion-nav>
+	</script>
+	<script id="moda-page" type="text/template">
+		<ion-header translucent>
+			<ion-toolbar>
+				<ion-title>
+					<ion-text color="dark">更新日志</ion-text>
+				</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content fullscreen class="ion-padding">
+
+			<ion-text color="primary">
+				<h2>2.3</h2>
+			</ion-text>
+			<ion-text color="danger">
+				<h3>该网站现在已经适配iPad分辨率,对于电脑分辨率则启用iPad分辨率</h3>
+			</ion-text>
+			<ion-text color="warning">更新内容:</ion-text>
+			<ion-text color="success">
+				<blockquote>
+					<ol>
+						<li>更新提示已不再直接弹出，更换为ios信息式提示框，不再过度打扰用户</li>
+						<li>文章列表样式更新</li>
+						<li>markdown样式更新，更换为少数派风格（<a href="https://sspai.com/post/43873%EF%BC%89">https://sspai.com/post/43873）</a></li>
+						<li>Bug:文章列表出现错位情况（未修复）</li>
+					</ol>
+				</blockquote>
+			</ion-text>
+			<ion-text color="danger">已知问题：</ion-text>
+			<ion-text color="success">
+				<blockquote>
+					<ol>
+						<li>iPad分辨率modal框错位（擦边修复）</li>
+						<li>分辨率从iPhone至iPad时，阅读的文章无法切换至侧面，分辨率从ipad切换至iPhone同理</li>
+						<li>在iPad处于分屏模式时，快速改变浏览器窗口大小，无法正常使用适配ipad分辨率</li>
+						<li>生日功能无法正常运行</li>
+					</ol>
+				</blockquote>
+			</ion-text>
+			<ion-text color="danger">期望目标：</ion-text>
+			<ion-text color="success">
+				<blockquote>
+					<ol>
+						<li>文章统一归档</li>
+						<li>文章自动按照时间排序</li>
+						<li>文章与文章内搜索搜索</li>
+						<li>文章分享功能</li>
+						<li>想到其他的什么再写吧...</li>
+					</ol>
+				</blockquote>
+			</ion-text>
+			<ion-button expand="block" slot="fixed" onclick="aleardy()"
+					style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用</ion-button>
+		</ion-content>
+	</script>
+	<script id="moda-bi" type="text/template">
+		<ion-header translucent>
+			<ion-toolbar>
+				<ion-title><ion-text color="dark">祝贺</ion-text></ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content fullscreen class="ion-padding">
+			<ion-text id="text"></ion-text>
+			<ion-button expand="block" slot="fixed" onclick="bic()" style="padding:4px;width: 100%;bottom: 5px;">继续</ion-button>
+		</ion-content>
+	</script>
+	<script id="passage-home" type="text/template">
+		<ion-nav id="passage-nav" root="passage-root"></ion-nav>
+	</script>
+	<script id="passage-root" type="text/template">
+		<ion-toolbar>
+			<ion-title>文章</ion-title>
+			<ion-buttons slot="start">
+				<ion-menu-button></ion-menu-button>
+			</ion-buttons>
+		</ion-toolbar>
+		<ion-content>
+			<ion-list id="list">
+			</ion-list>
+		</ion-content>
+	</script>
+	<script id="update" type="text/template">
+## 1.0
+>1. 网站建立  
+>2. 基础UI完善(ionic 1.0)  
+>3. 文章请求添加(只请求,不渲染)  
+## 1.1
+>1. 增添新界面,即文章界面
+>2. 切换主界面至文章界面采用悬浮窗  
+>3. 文章功能实装,渲染使用src:doc    
+## 1.2
+>1. 切换主界面至文章界面采用侧边栏  
+>2. 增加疫情地图  
+## 1.3
+>1. 在设置增加了vconsole调试  
+>2. 添加了疫情地图选项,疫情地图不是绝对选项  
+## 2.0
+>1. 更新ionic至4.0,重写所有代码  
+>2. 适配暗黑模式
+>3. 添加了更新提醒
+>4. 生日请求添加(理论上这是一个个人blog,所以有此更新)(只请求)
+>5. 移除疫情地图与vconsole调试
+>6. Bug：处于暗黑模式进入网页网页不使用暗黑模式样式（已修复）
+## 2.1
+>1. 生日功能实装
+>2. 改进文章栏,现在文章列表有一个指定json文件(path:./passage/passage-list.json)
+>3. 修复处于暗黑模式进入网页不启用网页暗黑模式的问题
+>4. 在设置界面添加更新日志
+>5. 添加eruda为调试
+>6. Bug:生日功能无法正常运行(未修复)
+## 2.2
+>1. 适配iPad分辨率
+>2. Bug:分辨率从iPhone至iPad时，阅读的文章无法切换至侧面，分辨率从ipad切换至iPhone同理(未修复)
+>3. Bug:在iPad处于分屏模式时，快速改变浏览器窗口大小，无法正常使用适配ipad分辨率(未修复)
+## 2.2.1
+>1. Bug:iPad分辨率modal框错位（擦边修复）
+## 2.3
+>1. 更新提示已不再直接弹出，更换为ios信息式提示框，不再过度打扰用户
+>2. 文章列表样式更新
+>3. markdown样式更新，更换为少数派风格（https://sspai.com/post/43873）
+>4. Bug:文章列表出现错位情况（未修复）
+	</script>
+	<script src="script.js">
+	</script>
+
+</body>
+
+</html>
