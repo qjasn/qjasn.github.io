@@ -1,11 +1,5 @@
 {
 	"passage": [{
-		"time":"2021.7.26",
-		"passageName":"test",
-		"passagePath":"passage3",
-		"music":"nothing",
-		"des":"test"
-	},{
 		"time":"2021.3.1",
 		"passageName": "spring",
 		"passagePath": "passage2",
