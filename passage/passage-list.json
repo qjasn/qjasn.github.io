@@ -3,13 +3,15 @@
 		"time":"2021.3.1",
 		"passageName": "spring",
 		"passagePath": "passage2",
-		"music":"spring.mp3",
+		"musicPath":"spring.mp3",
+		"musicName":"spring(By Joe Hisaishi)",
 		"des":"听一听安静的钢琴曲，清净自己的心灵"
 	},{
 		"time":"2021.2.12",
 		"passageName": "想说的话",
 		"passagePath": "passage1",
-		"music":"DaShangHuaHuoBibipiano.mp3",
+		"musicPath":"DaShangHuaHuoBibipiano.mp3",
+		"musicName":"打上花火（By Yonezu Kenshi)",
 		"des":"在开始前，我想先说些什么"
 	}]
 }
