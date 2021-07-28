@@ -16,7 +16,7 @@ $(document).ready(function () {
 	})
 
 })
-// 缩放
+// 禁用缩放
 try {
 	// 禁用双击缩放
 	document.addEventListener("touchstart", function (event) {
@@ -65,7 +65,7 @@ function popup(title, content, event) {
 	setTimeout("popupC()", 4000);
 }
 function popupC() {
-	$('.in').animate({ top: '-77px' },'slow', function () {
+	$('.in').animate({ top: '-77px' }, 'slow', function () {
 		$('.in').hide()
 	});
 }
@@ -302,7 +302,7 @@ customElements.define('nav-detail', class NavDetail extends HTMLElement {
 		this.innerHTML = document.getElementById('page1').innerHTML
 		console.log(document.getElementById('passage'))
 		document.getElementById('passage').innerHTML = p
-
+		gitalk.render('gitalk-container');    // 渲染Gitalk评论组件
 	}
 });
 customElements.define('nav-set', class NavSet extends HTMLElement {
@@ -356,7 +356,7 @@ customElements.define('tab-page', class TabPage extends HTMLElement {
 })
 customElements.define('set-page', class SetPage extends HTMLElement {
 	connectedCallback() {
-		this.innerHTML =`
+		this.innerHTML = `
 			<ion-header>
 				<ion-toolbar color="">
 					<ion-title>update log</ion-title>
@@ -366,7 +366,7 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 				</ion-toolbar>
 			</ion-header>
 			<ion-content>` +
-				marked(document.getElementById('update').innerHTML) + `
+			marked(document.getElementById('update').innerHTML) + `
 			</ion-content>`
 	}
 })
@@ -384,29 +384,35 @@ passager.onreadystatechange = function () {
 	if (passager.readyState == 4 && passager.status == 200) {
 		let json = JSON.parse(passager.responseText);
 		for (let i = 0; i < json.passage.length; i++) {
-			passageList = passageList + 
-			`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` +json.passage[i].music + `')">
-				<ion-card-header>
-					<ion-sub-title>`+
-						json.passage[i].time +
-					`</ion-sub-title>` +
-					`<ion-card-title>`
-						+ json.passage[i].passageName +
-					`</ion-card-title>` + 
-				`</ion-card-header>`+
-				`<ion-card-content>`+
-					json.passage[i].des+
-				`</ion-card-header>`+
-			`</ion-card>`
+			passageList = passageList +
+				`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i].musicPath + `','` + json.passage[i].musicName + `')">
+					<ion-card-header>
+						<ion-sub-title>`+
+				json.passage[i].time +
+				`</ion-sub-title>` +
+				`<ion-card-title>`
+				+ json.passage[i].passageName +
+				`</ion-card-title>` +
+				`</ion-card-header>` +
+				`<ion-card-content>` +
+				json.passage[i].des +
+				`</ion-card-header>` +
+				`</ion-card>`
 		}
 	}
 }
+/*
+
+passage get
+loacl to string:p
+
+*/
 var p;
 var fzfp = "# 404 not find";
 var audio;
 var httpRequest = new XMLHttpRequest();
 
-function passage(passage, music) {
+function passage(passage, music, musicn) {
 	console.log('on')
 	wait(100)
 	httpRequest.open('GET', 'passage/' + passage + '.passage', true); //get passage 
@@ -419,14 +425,22 @@ function passage(passage, music) {
 				p = marked(fzfp)
 			} else {
 				p = marked(httpRequest.responseText)
-				if (music !== "nothing") {
+				if (music !== "none") {
 					p = `
 					<div class="markdown">
-						<audio controls>
-							<source src="music/` + music + `">
-						</audio>` 
-						+ p + 
-					`</div>`
+						<ion-card>
+							<ion-card-header>
+								<ion-card-title>`+ musicn + `</ion-card-title>
+							</ion-card-header>
+							<ion-card-content>
+								<audio controls style="width:97%;left:1.5%">
+									<source src="music/` + music + `">
+								</audio>
+							</ion-card-content>
+						</ion-card>`
+						+ p +
+						`<div id="gitalk-container"></div>
+					</div>`
 				}
 				if (display == "ipad") {
 					pn.popToRoot()
@@ -439,3 +453,15 @@ function passage(passage, music) {
 		}
 	}
 }
+
+/*
+gitalk
+*/
+var gitalk = new Gitalk({
+	clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
+	clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
+	repo: 'qikx',      // 存放评论的仓库
+  	owner: 'qjasn',          // 仓库的创建者，
+	admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
+	id: window.location,      // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+})
