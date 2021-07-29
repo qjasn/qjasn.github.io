@@ -371,7 +371,7 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 })
 
 //ios theme
-if (location.search !== '?ionic:mode=ios') {
+if (location.search.split('&')[0] !== '?ionic:mode=ios') {
 	location.search = '?ionic:mode=ios'
 }
 //Passage url
