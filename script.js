@@ -463,6 +463,6 @@ var gitalk = new Gitalk({
 	repo: 'qikx',      // 存放评论的仓库
   	owner: 'qjasn',          // 仓库的创建者，
 	admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
-	id: window.location,      // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+	id: 'pinlun',      // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
 	language:'zh-CN'
 })
