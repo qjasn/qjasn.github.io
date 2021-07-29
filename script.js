@@ -143,7 +143,6 @@ function aleardy() {
 }
 // Called when the app loads
 function loadApp() {
-	console.log('hello')
 	// Query for the toggle that is used to change between themes
 	toggle = document.querySelector('ion-list #themeToggle');
 	// Listen for the toggle check/uncheck to toggle the dark class on the <body>
@@ -182,7 +181,6 @@ function checkToggle(shouldCheck) {
 //ipad or iphone display
 var display;
 function fbl() {
-	console.log('h')
 	if ($(window).width() > 610) {
 		display = 'ipad'
 		$('#ionApp')[0].classList.add('mobil')
@@ -300,7 +298,6 @@ customElements.define('nav-home', class NavHome extends HTMLElement {
 customElements.define('nav-detail', class NavDetail extends HTMLElement {
 	connectedCallback() {
 		this.innerHTML = document.getElementById('page1').innerHTML
-		console.log(document.getElementById('passage'))
 		document.getElementById('passage').innerHTML = p
 		gitalk.render('gitalk-container');    // 渲染Gitalk评论组件
 	}
@@ -372,7 +369,7 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 })
 
 //ios theme
-if (location.search.split('&')[0] !== '?ionic:mode=ios') {
+if (location.search !== '?ionic:mode=ios') {
 	location.search = '?ionic:mode=ios'
 }
 //Passage http get
@@ -413,7 +410,7 @@ var audio;
 var httpRequest = new XMLHttpRequest();
 
 function passage(passage, music, musicn) {
-	gitalk.title=passage
+	fgitalk(passage)
 	wait(100)
 	httpRequest.open('GET', 'passage/' + passage + '.passage', true); //get passage 
 	httpRequest.send(); //send require
@@ -421,7 +418,6 @@ function passage(passage, music, musicn) {
 	httpRequest.onreadystatechange = function () {
 		if (httpRequest.readyState == 4) {
 			if (httpRequest.status == 404) {
-				console.log('err')
 				p = marked(fzfp)
 			} else {
 				p = marked(httpRequest.responseText)
@@ -446,7 +442,6 @@ function passage(passage, music, musicn) {
 					pn.popToRoot()
 					pn.push('nav-detail')
 				} else {
-					console.log('h')
 					passagenav.push('nav-detail')
 				}
 			}
@@ -457,12 +452,15 @@ function passage(passage, music, musicn) {
 /*
 gitalk
 */
-var gitalk = new Gitalk({
-	clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
-	clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
-	repo: 'qikx',      // 存放评论的仓库
-  	owner: 'qjasn',          // 仓库的创建者，
-	admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
-	id: 'pinlun',      // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
-	language:'zh-CN'
-})
+var gitalk;
+function fgitalk(title) {
+	gitalk = new Gitalk({
+		clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
+		clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
+		repo: 'qikx',      // 存放评论的仓库
+		owner: 'qjasn',          // 仓库的创建者，
+		admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
+		id: 'hello',       // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+		title:title
+	})
+}
