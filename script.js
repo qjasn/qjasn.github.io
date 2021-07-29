@@ -299,6 +299,7 @@ customElements.define('nav-detail', class NavDetail extends HTMLElement {
 	connectedCallback() {
 		this.innerHTML = document.getElementById('page1').innerHTML
 		document.getElementById('passage').innerHTML = p
+		$('#passage-title')[0].innerHTML=passagen
 		gitalk.render('gitalk-container');    // 渲染Gitalk评论组件
 	}
 });
@@ -308,6 +309,7 @@ customElements.define('nav-set', class NavSet extends HTMLElement {
 		//hey,we can show the birthday person to my website
 		//and this is the update information
 		startpage();
+		passageStart();
 	}
 });
 customElements.define('modal-content', class ModalContent extends HTMLElement {
@@ -372,29 +374,40 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 if (location.search !== '?ionic:mode=ios') {
 	location.search = '?ionic:mode=ios'
 }
+//Passage url
+if (location.hash == "") {
+
+}
 //Passage http get
+var passagen
 var passageList = "";
 var passager = new XMLHttpRequest()
-passager.open('GET', 'passage/passage-list.json', true);
-passager.send();
-passager.onreadystatechange = function () {
-	if (passager.readyState == 4 && passager.status == 200) {
-		let json = JSON.parse(passager.responseText);
-		for (let i = 0; i < json.passage.length; i++) {
-			passageList = passageList +
-				`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i].musicPath + `','` + json.passage[i].musicName + `')">
+function passageStart() {
+	passager.open('GET', 'passage/passage-list.json', true);
+	passager.send();
+	passager.onreadystatechange = function () {
+		if (passager.readyState == 4 && passager.status == 200) {
+			let json = JSON.parse(passager.responseText);
+			for (let i = 0; i < json.passage.length; i++) {
+				passageList = passageList +
+					`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i].passageName +`','`+ json.passage[i].musicPath + `','` + json.passage[i].musicName + `')">
 					<ion-card-header>
 						<ion-sub-title>`+
-				json.passage[i].time +
-				`</ion-sub-title>` +
-				`<ion-card-title>`
-				+ json.passage[i].passageName +
-				`</ion-card-title>` +
-				`</ion-card-header>` +
-				`<ion-card-content>` +
-				json.passage[i].des +
-				`</ion-card-header>` +
-				`</ion-card>`
+					json.passage[i].time +
+					`</ion-sub-title>` +
+					`<ion-card-title>`
+					+ json.passage[i].passageName +
+					`</ion-card-title>` +
+					`</ion-card-header>` +
+					`<ion-card-content>` +
+					json.passage[i].des +
+					`</ion-card-header>` +
+					`</ion-card>`
+				if (window.location.hash == '#' + json.passage[i].passagePath) {
+					GoToPage('passage-home')
+					passage(json.passage[i].passagePath, json.passage[i].passageName,json.passage[i].musicPath, json.passage[i].musicName)
+				}
+			}
 		}
 	}
 }
@@ -409,8 +422,10 @@ var fzfp = "# 404 not find";
 var audio;
 var httpRequest = new XMLHttpRequest();
 
-function passage(passage, music, musicn) {
-	fgitalk(passage)
+function passage(passage, passagename ,music, musicn) {
+	document.title=passagename
+	passagen=passagename
+	window.location.hash="#"+passage
 	wait(100)
 	httpRequest.open('GET', 'passage/' + passage + '.passage', true); //get passage 
 	httpRequest.send(); //send require
@@ -442,6 +457,7 @@ function passage(passage, music, musicn) {
 					pn.popToRoot()
 					pn.push('nav-detail')
 				} else {
+					sleep(100)
 					passagenav.push('nav-detail')
 				}
 			}
@@ -452,15 +468,13 @@ function passage(passage, music, musicn) {
 /*
 gitalk
 */
-var gitalk;
-function fgitalk(title) {
-	gitalk = new Gitalk({
-		clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
-		clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
-		repo: 'qikx',      // 存放评论的仓库
-		owner: 'qjasn',          // 仓库的创建者，
-		admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
-		id: 'hello',       // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
-		title:title
-	})
-}
+var gitalk = new Gitalk({
+	clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
+	clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
+	repo: 'qikx',      // 存放评论的仓库
+	owner: 'qjasn',          // 仓库的创建者，
+	admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
+	id: 'hello',       // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+	language:'zh-CN',
+	title: title
+})
