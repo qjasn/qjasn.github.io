@@ -413,7 +413,7 @@ var audio;
 var httpRequest = new XMLHttpRequest();
 
 function passage(passage, music, musicn) {
-	console.log('on')
+	gitalk.title=passage
 	wait(100)
 	httpRequest.open('GET', 'passage/' + passage + '.passage', true); //get passage 
 	httpRequest.send(); //send require
