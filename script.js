@@ -299,8 +299,8 @@ customElements.define('nav-detail', class NavDetail extends HTMLElement {
 	connectedCallback() {
 		this.innerHTML = document.getElementById('page1').innerHTML
 		document.getElementById('passage').innerHTML = p
-		$('#passage-title')[0].innerHTML=passagen
-		gitalk.render('gitalk-container');    // 渲染Gitalk评论组件
+		$('#passage-title')[0].innerHTML = passagen
+		gitment.render('gitalk-container');    // 渲染Gitalk评论组件
 	}
 });
 customElements.define('nav-set', class NavSet extends HTMLElement {
@@ -390,7 +390,7 @@ function passageStart() {
 			let json = JSON.parse(passager.responseText);
 			for (let i = 0; i < json.passage.length; i++) {
 				passageList = passageList +
-					`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i].passageName +`','`+ json.passage[i].musicPath + `','` + json.passage[i].musicName + `')">
+					`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i].passageName + `','` + json.passage[i].musicPath + `','` + json.passage[i].musicName + `')">
 					<ion-card-header>
 						<ion-sub-title>`+
 					json.passage[i].time +
@@ -405,7 +405,7 @@ function passageStart() {
 					`</ion-card>`
 				if (window.location.hash == '#' + json.passage[i].passagePath) {
 					GoToPage('passage-home')
-					passage(json.passage[i].passagePath, json.passage[i].passageName,json.passage[i].musicPath, json.passage[i].musicName)
+					passage(json.passage[i].passagePath, json.passage[i].passageName, json.passage[i].musicPath, json.passage[i].musicName)
 				}
 			}
 		}
@@ -422,10 +422,10 @@ var fzfp = "# 404 not find";
 var audio;
 var httpRequest = new XMLHttpRequest();
 
-function passage(passage, passagename ,music, musicn) {
-	document.title=passagename
-	passagen=passagename
-	window.location.hash="#"+passage
+function passage(passage, passagename, music, musicn) {
+	document.title = passagename
+	passagen = passagename
+	window.location.hash = "#" + passage
 	wait(100)
 	httpRequest.open('GET', 'passage/' + passage + '.passage', true); //get passage 
 	httpRequest.send(); //send require
@@ -466,14 +466,13 @@ function passage(passage, passagename ,music, musicn) {
 }
 
 /*
-gitalk
+gitment
 */
-var gitalk = new Gitalk({
-	clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
-	clientSecret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08', // GitHub Application Client Secret
-	repo: 'qikx',      // 存放评论的仓库
-	owner: 'qjasn',          // 仓库的创建者，
-	admin: ['qjasn'],        // 如果仓库有多个人可以操作，那么在这里以数组形式写出
-	//id: 'hello',       // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
-	language:'zh-CN',
+var gitment = new Gitment({
+	owner: '73731689',
+	repo: 'qikx',
+	oauth: {
+		client_id: '0cb54c18847c58ac11d2',
+		client_secret: 'f71ccddbf84f6b12abb68d9e9d7d1fc82bfebc08',
+	},
 })
