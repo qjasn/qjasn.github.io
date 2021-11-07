@@ -2,31 +2,34 @@
 <html lang="zh-CN" class="ios">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
-	<title>Nav</title>
-	<!--eruda setting-->
-	<script src="//cdn.jsdelivr.net/npm/eruda"></script>
-	<script src="//cdn.jsdelivr.net/npm/eruda-code"></script>
-	<script>
-		eruda.init();
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <title>My Blog</title>
+    <!--gitalk-->
+	<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+	<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+    <!--eruda setting-->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="//cdn.jsdelivr.net/npm/eruda-code"></script>
+    <script>
+        eruda.init();
 		eruda.add(erudaCode);
-	</script>
-	<!--cdn (jquery markdown)-->
-	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
-	<script src="https://cdn.bootcdn.net/ajax/libs/marked/2.0.3/marked.js"></script>
-	<!--cd ionic-->
-	<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-	<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
-	<!--import style-->
-	<link rel="stylesheet" href="./style.css" />
-	<link rel="stylesheet" href="./sspai.css" />
-	<!--share-->
-	<script src="https://fa-ge.github.io/NativeShare/NativeShare.js"></script>
-	<!--import module-->
-	<script type="module">
-		import {
+    </script>
+    <!--cdn (jquery markdown)-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/2.0.3/marked.js"></script>
+    <!--cd ionic-->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <!--import style-->
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./sspai.css" />
+    <!--share-->
+    <script src="./NativeShare.js"></script>
+    <!--import module-->
+    <script type="module">
+        import {
 				modalController,
 				alertController,
 				menuController,
@@ -36,38 +39,38 @@
 			window.alertController = alertController;
 			window.menuController = menuController;
 			window.loadingController = loadingController;
-	</script>
-	<script>
-	</script>
+    </script>
+    <script>
+    </script>
 </head>
 
 <body onload="">
-	<div class="wait">请稍后，正在获取文章</div>
-	<div class="in" onclick="showupdate()">
-		<p style="color:gray" id="title">system</p>
-		<p id="content">hello world</p>
-	</div>
-	<div id="ionIon">
-		<ion-app id="ionApp" class="">
-			<div class="ion-page" id="main-content">
-				<ion-nav id="tab-ion" root="tab-page">
-				</ion-nav>
-			</div>
-		</ion-app>
-		<div class="passage">
-			<ion-nav id="cbl-c" root="cbl-p">
-			</ion-nav>
-		</div>
-	</div>
-	<script id="tab" type="text/template">
-		<ion-nav root="nav-home" id="ion-nav"></ion-nav>
+    <div class="wait">请稍后，正在获取文章</div>
+    <div class="in" onclick="showupdate()">
+        <p style="color:gray" id="title">system</p>
+        <p id="content">hello world</p>
+    </div>
+    <div id="ionIon">
+        <ion-app id="ionApp" class="">
+            <div class="ion-page" id="main-content">
+                <ion-nav id="tab-ion" root="tab-page">
+                </ion-nav>
+            </div>
+        </ion-app>
+        <div class="passage">
+            <ion-nav id="cbl-c" root="cbl-p">
+            </ion-nav>
+        </div>
+    </div>
+    <script id="tab" type="text/template">
+        <ion-nav root="nav-home" id="ion-nav"></ion-nav>
 	</ion-tabs>
 	</script>
-	<script id="cbl" type="text/template">
-		<ion-content><div id="p"><p style="font-size: 60px;color:gray">hello</p></div></ion-content>
+    <script id="cbl" type="text/template">
+        <ion-content><div id="p"><p style="font-size: 60px;color:gray">hello</p></div></ion-content>
 	</script>
-	<script id="set" type="text/template">
-		<ion-header translucent>
+    <script id="set" type="text/template">
+        <ion-header translucent>
 			<ion-toolbar >
 				<ion-title>设置</ion-title>
 				<ion-buttons><ion-back-button defaultHref="/">返回</ion-back-button></ion-buttons>
@@ -89,8 +92,8 @@
 			</ion-list>
 		</ion-content>
 	</script>
-	<script id="page" type="text/template">
-		<ion-header translucent>
+    <script id="page" type="text/template">
+        <ion-header translucent>
 			<ion-toolbar >
 				<ion-title>介绍</ion-title>
 				<ion-buttons slot="start">
@@ -108,9 +111,9 @@
 			[root@alarm ~]#info -w<br /><br />
 			</ion-text></div>
 			<div class="ion-padding" style="width:100%;height:calc(100vh - 300px">
-				<h1>一寸光阴一寸金,效率最先</h1>	
+				<h1>一寸光阴一寸金</h1>	
 				<ion-button onclick="modalpage('passage-home','#tab-ion','more')">进入文章界面</ion-button>
-				<h3>或者往下翻，看看网站介绍</h3>
+				<h3>往下翻，看看网站介绍</h3>
 			</div>
 			<div class="ion-padding">
 			<h2>一个基于ionic5的个人博客网站</h2>
@@ -133,8 +136,8 @@
 			</div>
 		</ion-content>
 	</script>
-	<script id="page1" type="text/template">
-		<ion-header translucent>
+    <script id="page1" type="text/template">
+        <ion-header translucent>
 				<ion-toolbar>
 					<ion-title  id="passage-title"></ion-title>
 					<ion-buttons onclick="window.location.hash=''" slot="start">
@@ -149,13 +152,14 @@
 			</ion-header>
 			<ion-content fullscreen>
 				<div id="passage" class="ion-padding"></div>
+				<div id="gitalk"></div>
 			</ion-content>
 			</script>
-	<script id="modal" type="text/template">
-		<ion-nav id="nav-modal"></ion-nav>
+    <script id="modal" type="text/template">
+        <ion-nav id="nav-modal"></ion-nav>
 	</script>
-	<script id="moda-page" type="text/template">
-		<ion-header translucent>
+    <script id="moda-page" type="text/template">
+        <ion-header translucent>
 			<ion-toolbar >
 				<ion-title>更新日志</ion-title>
 			</ion-toolbar>
@@ -163,19 +167,15 @@
 		<ion-content fullscreen class="ion-padding">
 
 			<ion-text >
-				<h2>2.3</h2>
-			</ion-text>
-			<ion-text color="danger">
-				<h3>该网站现在已经适配iPad分辨率,对于电脑分辨率则启用iPad分辨率</h3>
+				
 			</ion-text>
 			<ion-text color="warning">更新内容:</ion-text>
 			<ion-text color="success">
-				<h2 id="302021810">3.0(2021.8.10)</h2>
+				<h2 id="302021810">3.2(2021.9)</h2>
 				<blockquote>
 					<ol>
-						<li>重写UI，使其更像一个博客，而不是一个应用（旧版UI(暂时失效）: <a href="https://qjasn.github.io/qikx/old_index.html">https://qjasn.github.io/qikx/old_index.html</a> )</li>
-						<li>添加分享功能，快速分享文章</li>
-						<li>重写主页</li>
+						<li>不同的操作系统现在有不同的界面了</li>
+						<li>更新评论系统(初版)</li>
 					</ol>
 				</blockquote>
 			</ion-text>
@@ -205,8 +205,8 @@
 					style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用</ion-button>
 		</ion-content>
 	</script>
-	<script id="moda-bi" type="text/template">
-		<ion-header translucent>
+    <script id="moda-bi" type="text/template">
+        <ion-header translucent>
 			<ion-toolbar>
 				<ion-title><ion-text color="dark">祝贺</ion-text></ion-title>
 			</ion-toolbar>
@@ -216,11 +216,11 @@
 			<ion-button expand="block" slot="fixed" onclick="bic()" style="padding:4px;width: 100%;bottom: 5px;">继续</ion-button>
 		</ion-content>
 	</script>
-	<script id="passage-home" type="text/template">
-		<ion-nav id="passage-nav" root="passage-root"></ion-nav>
+    <script id="passage-home" type="text/template">
+        <ion-nav id="passage-nav" root="passage-root"></ion-nav>
 	</script>
-	<script id="passage-root" type="text/template">
-		<ion-toolbar >
+    <script id="passage-root" type="text/template">
+        <ion-toolbar >
 			<ion-title>文章</ion-title>
 			<ion-buttons id="modal-back" slot="start">
 				{{button}}
@@ -231,8 +231,8 @@
 			</div>
 		</ion-content>
 	</script>
-	<script id="update" type="text/template">
-## 1.0(2020.2.12)
+    <script id="update" type="text/template">
+        ## 1.0(2020.2.12)
 >1. 网站建立  
 >2. 基础UI完善(ionic 1.0)  
 >3. 文章请求添加(只请求,不渲染)  
@@ -272,13 +272,20 @@
 >3. markdown样式更新，更换为少数派风格（ https://sspai.com/post/43873 ）
 >4. Bug:文章列表出现错位情况（未修复）
 ## 3.0(2021.8.10)
->1. 重写UI，使其更像一个博客，而不是一个应用（旧版UI: (暂时失效）https://qjasn.github.io/qikx/old_index.html )
+>1. 重写UI，使其更像一个博客，而不是一个应用（旧版UI: https://qjasn.gitee.io/qikx/old_index.html )
 >2. 添加分享功能，快速分享文章
 >3. 重写主页
 >4. Bug：分辨率从iPhone至iPad时，会有错位等bug出现，请不要在阅读文章时切换分辨率，以防丢失阅读进度（未修复）
-	</script>
-	<script src="script.js">
-	</script>
+## 3.1(2021.8.18)
+>1. 评论系统上线
+## 3.2(2021.9)
+>1. 不同的操作系统现在有不同的显示界面了
+## 3.3(2021.11.6)
+>1. 评论系统完善
+>2. 放弃gitee pages
+    </script>
+    <script src="script.js">
+    </script>
 
 </body>
 
