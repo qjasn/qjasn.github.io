@@ -1,9 +1,9 @@
 //jquery ready
-$(document).ready(function () {
+$(document).ready(function() {
 	//different window has different display way
 	fbl()
 	//listen for changes to window size
-	$(window).resize(function () {
+	$(window).resize(function() {
 		fbl();
 		switch (display) {
 			case 'iphone':
@@ -22,10 +22,47 @@ $(document).ready(function () {
 	})
 
 })
+$(window).bind('hashchange', function() {})
+
+function hashL() {
+	console.log('以下报错请忽略')
+	if (window.location.hash) {
+		switch (window.location.hash.split('#')[1].split(',')[0]) {
+			case 'passage':
+				for (let i = 0; i < passageJson.passage.length; i++) {
+					if (window.location.hash.split(',')[1] == passageJson.passage[i].passagePath) {
+
+						var fin = modalpage('passage-home', '#tab-ion', 'more')
+
+						fin.finally(function() {
+							passage(passageJson.passage[i].passagePath, passageJson.passage[i].passageName,
+								passageJson.passage[i].musicPath,
+								passageJson.passage[i].musicName, passageJson.passage[i].des, i)
+						})
+					}
+				}
+				break;
+			default:
+				window.location.hash = ""
+				/*hash定位，目前未完成
+				case 'main':
+					dismodalpage();
+					tabnav.popToRoot()
+					break;
+				case 'list':
+					console.log('list')
+					modalpage('passage-home','#tab-ion','more');
+				*/
+		}
+	} else {
+		window.location.hash = ""
+	}
+}
+
 // 禁用缩放
 try {
 	// 禁用双击缩放
-	document.addEventListener("touchstart", function (event) {
+	document.addEventListener("touchstart", function(event) {
 		if (event.touches.length > 1) {
 			event.preventDefault();
 		}
@@ -33,7 +70,7 @@ try {
 	var lastTouchEnd = 0;
 	document.addEventListener(
 		"touchend",
-		function (event) {
+		function(event) {
 			var now = new Date().getTime();
 			if (now - lastTouchEnd <= 300) {
 				event.preventDefault();
@@ -43,11 +80,11 @@ try {
 		false
 	);
 	// 禁用双指手势操作
-	document.addEventListener("gesturestart", function (event) {
+	document.addEventListener("gesturestart", function(event) {
 		event.preventDefault();
 	});
-} catch (error) { }
-document.documentElement.addEventListener('touchmove', function (event) {
+} catch (error) {}
+document.documentElement.addEventListener('touchmove', function(event) {
 	if (event.touches.length > 1) {
 		event.preventDefault();
 	}
@@ -84,7 +121,7 @@ function popup(title, content, event) {
 function popupC() {
 	$('.in').animate({
 		top: '-77px'
-	}, 'slow', function () {
+	}, 'slow', function() {
 		$('.in').hide()
 	});
 }
@@ -134,7 +171,7 @@ function birthday() {
 	var birthday = new XMLHttpRequest();
 	birthday.open('GET', './birthday.json', true);
 	birthday.send();
-	birthday.onreadystatechange = function () {
+	birthday.onreadystatechange = function() {
 		let date = new Date()
 		if (birthday.readyState == 4 && birthday.status == 200) {
 			let json = JSON.parse(birthday.responseText);
@@ -165,7 +202,7 @@ function toggleDarkTheme(shouldAdd) {
 //update information
 function aleardy() {
 	dismissModal();
-	localStorage.update = '3.0'
+	localStorage.update = '3.2'
 }
 var darkmode;
 // Called when the app loads
@@ -182,8 +219,8 @@ function loadApp() {
 }
 
 function checkupdate() {
-	if (localStorage.update == '3.0') {
-		localStorage.update = '3.0'
+	if (localStorage.update == '3.2') {
+		localStorage.update = '3.2'
 	} else {
 		setTimeout('popup("提示","网站已更新，点击查看后不再提示","checkupdate()")', 1000)
 
@@ -191,14 +228,16 @@ function checkupdate() {
 }
 
 function showupdate() {
-	localStorage.update = '3.0'
+	localStorage.update = '3.1'
 	popupC()
 	switch (display) {
 		case 'iphone':
+			dismodalpage()
 			createModal('#tab-ion');
 			break;
 		case 'ipad':
-			pn.push('modal-content')
+			pn.popToRoot()
+			pn.push('modal-page')
 			break;
 	}
 }
@@ -214,10 +253,11 @@ function checkToggle(shouldCheck) {
 }
 //share
 var nativeShare = new NativeShare()
+
 function share(title, des) {
 	var shareData = {
 		title: title,
-		desc: des,
+		desc: title,
 		// 不要过于依赖以下两个回调，很多浏览器是不支持的
 	}
 	nativeShare.setShareData(shareData)
@@ -241,7 +281,7 @@ function fbl() {
 	}
 }
 //function about model
-var mod, modnv, modeH,replace;
+var mod, modnv, modeH, replace;
 async function modalpage(root, ele, how) {
 	modeH = how
 	switch (display) {
@@ -253,21 +293,23 @@ async function modalpage(root, ele, how) {
 			await modct.present();
 			mod = modct;
 			modnv = document.querySelector('#nav-modal')
-			replace='<ion-button onclick="dismodalpage()">完成</ion-button>'
+			replace = '<ion-button onclick="dismodalpage();his=0">完成</ion-button>'
 			modnv.setRoot(root)
 
 			break;
 		case 'ipad':
 			switch (how) {
 				case 'only':
-					
-					replace='<ion-button onclick="dismodalpage()"><ion-icon name="chevron-back-outline"></ion-icon>返回<ion-button>'
+
+					replace =
+						'<ion-button onclick="dismodalpage();his=0"><ion-icon name="chevron-back-outline"></ion-icon>返回<ion-button>'
 					pn.push(root)
 
 
 					break;
 				case 'more':
-					replace = '<ion-button onclick="tabnav.popTo()"><ion-icon name="chevron-back-outline"></ion-icon>返回</ion-back-button>'
+					replace =
+						'<ion-button onclick="tabnav.popTo();his=0"><ion-icon name="chevron-back-outline"></ion-icon>返回</ion-back-button>'
 					GoToPage(root)
 
 					break;
@@ -384,6 +426,8 @@ customElements.define('nav-detail', class NavDetail extends HTMLElement {
 	connectedCallback() {
 		this.innerHTML = document.getElementById('page1').innerHTML
 		document.getElementById('passage').innerHTML = p
+		console.log(number)
+		gitalk[number].render('gitalk')
 		$('#passage-title')[0].innerHTML = passagen
 	}
 });
@@ -424,7 +468,7 @@ customElements.define('passage-home', class PassageHome extends HTMLElement {
 
 customElements.define('passage-root', class PassageRoot extends HTMLElement {
 	connectedCallback() {
-		this.innerHTML = document.getElementById('passage-root').innerHTML.replace('{{button}}',replace)
+		this.innerHTML = document.getElementById('passage-root').innerHTML.replace('{{button}}', replace)
 		document.getElementById('list').innerHTML = passageList;
 	}
 })
@@ -433,6 +477,7 @@ customElements.define('tab-page', class TabPage extends HTMLElement {
 		this.innerHTML = document.getElementById('tab').innerHTML
 		setnav = document.querySelector('#ion-set');
 		nav = document.querySelector('#ion-nav');
+		console.log('start')
 		passageStart();
 		//hey,we can show the birthday person to my website
 		//and this is the update information
@@ -445,7 +490,7 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 			<ion-header>
 				<ion-toolbar >
 					<ion-title>update log</ion-title>
-					<ion-buttons slot="start" id="modal-back">`+replace+`
+					<ion-buttons slot="start" id="modal-back">` + replace + `
 					</ion-buttons>
 				</ion-toolbar>
 			</ion-header>
@@ -455,29 +500,30 @@ customElements.define('set-page', class SetPage extends HTMLElement {
 	}
 })
 
-//ios theme
-if (location.search.split('&')[0] !== '?ionic:mode=ios') {
-	location.search = '?ionic:mode=ios'
-}
 //Passage url
 if (location.hash == "") {
 
 }
-//Passage http get
-var passagen
+//Passage http get and giteement
+var passageJson;
+var passagen;
 var passageList = "";
 var passager = new XMLHttpRequest()
+var gitalk = new Array();
 
 function passageStart() {
 	passager.open('GET', 'passage/passage-list.json', true);
 	passager.send();
-	passager.onreadystatechange = function () {
+	passager.onreadystatechange = function() {
 		if (passager.readyState == 4 && passager.status == 200) {
+			passageJson = JSON.parse(passager.responseText)
 			let json = JSON.parse(passager.responseText);
+			hashL()
 			for (let i = 0; i < json.passage.length; i++) {
 				passageList = passageList +
 					`<ion-card onclick="passage('` + json.passage[i].passagePath + `','` + json.passage[i]
-						.passageName + `','` + json.passage[i].musicPath + `','` + json.passage[i].musicName + `,` + json.passage[i].des + `')">
+					.passageName + `','` + json.passage[i].musicPath + `','` + json.passage[i].musicName + `','` +
+					json.passage[i].des + `',` + i + `)">
 					<ion-card-header>
 						<ion-sub-title>` +
 					json.passage[i].time +
@@ -490,15 +536,14 @@ function passageStart() {
 					json.passage[i].des +
 					`</ion-card-header>` +
 					`</ion-card>`
-				if (window.location.hash == '#' + json.passage[i].passagePath) {
-
-					var fin = modalpage('passage-home', '#tab-ion', 'more')
-
-					fin.finally(function () {
-						passage(json.passage[i].passagePath, json.passage[i].passageName, json.passage[i].musicPath,
-							json.passage[i].musicName, json.passage[i].des)
-					})
-				}
+				gitalk[i] = new Gitalk({
+					clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
+					clientSecret: '5bcad74411fe0813fa8abb795034bc2113209ae9', // GitHub Application Client Secret
+					repo: 'qjxy', // 存放评论的仓库
+					owner: 'qjasn', // 仓库的创建者，
+					admin: ['qjasn'], // 如果仓库有多个人可以操作，那么在这里以数组形式写出
+					id: json.passage[i].passageName, // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+				})
 			}
 		}
 	}
@@ -513,18 +558,19 @@ var p;
 var fzfp = "# 404 not find";
 var audio;
 var describe;
+var number;
 var httpRequest = new XMLHttpRequest();
 
-function passage(passage, passagename, music, musicn, des) {
+function passage(passage, passagename, music, musicn, des, num) {
 	document.title = passagename
 	passagen = passagename
 	describe = des;
-	window.location.hash = "#" + passage
+	window.location.hash = "#passage," + passage
 	wait(1000)
 	httpRequest.open('GET', 'passage/' + passage + '.md', true); //get passage 
 	httpRequest.send(); //send require
 	//marked(data)
-	httpRequest.onreadystatechange = function () {
+	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState == 4) {
 			if (httpRequest.status == 404) {
 				p = marked(fzfp)
@@ -543,10 +589,10 @@ function passage(passage, passagename, music, musicn, des) {
 								</audio>
 							</ion-card-content>
 						</ion-card>` +
-						p +
-						`<div id="gitalk-container"></div>
-					</div>`
+						p `</div>`
 				}
+				number = num
+				console.log(num)
 				if (display == "ipad") {
 					pn.push('nav-detail')
 				} else {
@@ -556,4 +602,10 @@ function passage(passage, passagename, music, musicn, des) {
 			}
 		}
 	}
+}
+
+
+//ios theme
+if (location.search.split("&")[0] !== "?ionic:mode=ios") {
+	location.search = "?ionic:mode=ios"
 }
