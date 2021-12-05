@@ -1,5 +1,6 @@
 //jquery ready
 $(document).ready(function() {
+	$('.show-me').hide();
 	//different window has different display way
 	fbl()
 	//listen for changes to window size
@@ -202,7 +203,7 @@ function toggleDarkTheme(shouldAdd) {
 //update information
 function aleardy() {
 	dismissModal();
-	localStorage.update = '3.2'
+	localStorage.update = '3.4'
 }
 var darkmode;
 // Called when the app loads
@@ -219,8 +220,8 @@ function loadApp() {
 }
 
 function checkupdate() {
-	if (localStorage.update == '3.2') {
-		localStorage.update = '3.2'
+	if (localStorage.update == '3.4') {
+		localStorage.update = '3.4'
 	} else {
 		setTimeout('popup("提示","网站已更新，点击查看后不再提示","checkupdate()")', 1000)
 
@@ -228,7 +229,7 @@ function checkupdate() {
 }
 
 function showupdate() {
-	localStorage.update = '3.1'
+	localStorage.update = '3.4'
 	popupC()
 	switch (display) {
 		case 'iphone':
@@ -604,6 +605,14 @@ function passage(passage, passagename, music, musicn, des, num) {
 	}
 }
 
+function showMe(){
+	$('.main-page').fadeOut('fast',function(){$('.show-me').fadeIn();});
+	
+	
+}
+function outShowMe(){
+	$('.show-me').fadeOut('fast',function(){$('.main-page').fadeIn();});
+}
 
 //ios theme
 if (location.search.split("&")[0] !== "?ionic:mode=ios") {
