@@ -3,6 +3,7 @@
 * ------------------
 */
 body.dark {
+	background-color: #313131;
 	--ion-color-primary: #428cff;
 	--ion-color-primary-rgb: 66, 140, 255;
 	--ion-color-primary-contrast: #ffffff;
@@ -244,4 +245,24 @@ body {
 }
 #passage{
 	user-select:text;
+}
+.show-me{
+	overflow: scroll;
+	width: calc(100vw - 30px);
+	position: absolute;
+	height: calc(100vh - 30px);
+	left: 15px;
+	top:15px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+body.dark .show-me{
+	background-color: #313131;
+	color: whitesmoke;
+	overflow: scroll;
+	width: calc(100vw - 30px);
+	position: absolute;
+	height: calc(100vh - 30px);
+	left: 15px;
+	top:15px;
+	box-shadow: 0 4px 8px 0 rgba(246, 246, 246, 0.2), 0 6px 20px 0 rgba(239, 239, 239, 0.2);
 }
