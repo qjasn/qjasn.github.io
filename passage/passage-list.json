@@ -1,10 +1,20 @@
 {
-	"passage": [{
-		"time":"2021.8.8",
-		"passageName":"如何在m1 Mac上使用qemu虚拟机以使用windows（包含utm的使用方法）",
-		"passagePath":"qemu",
-		"music":"nothing",
-		"des":"用不起昂贵的parallels desktop虚拟机的学生党可以试试",
-		"musicPath":"none"
-	}]
+  "passage": [
+    {
+      "time": "2020.2.12,2022.11.6",
+      "passageName":"关于",
+      "passagePath": "about",
+      "music": "nothing",
+      "des": "一些想说的话",
+      "musicPath": "none"
+    },
+    {
+      "time": "2021.8.8",
+      "passageName": "如何在m1 Mac上使用qemu虚拟机以使用windows（包含utm的使用方法）",
+      "passagePath": "qemu",
+      "music": "nothing",
+      "des": "用不起昂贵的parallels desktop虚拟机的学生党可以试试",
+      "musicPath": "none"
+    }
+  ]
 }
