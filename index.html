@@ -1,298 +1,255 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="ios">
+<html xmlns="">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
-		<title>My Blog</title>
-		<script src="//cdn.jsdelivr.net/npm/@triggerjs/trigger" defer></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="color-scheme" content="light dark"/>
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3880ff"/>
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#eb445a"/>
+    <!--css-->
+    <link rel="stylesheet" href="./css.css">
+    <link rel="stylesheet" href="./passage/sspai.css">
+    <!--start import-->
+    <!--marked-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/2.0.3/marked.js"></script>
+    <!--ionic-->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+    <!--gitalk-->
+    <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+    <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+    <!--share-->
+    <script src="./NativeShare.js"></script>
+    <!--end import-->
+    <!--window.ionic-->
+    <script type="module">
+        import {
+            loadingController,
+            alertController,
+            modalController,
+            toastController
+        } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
 
-		<!--gitalk-->
-		<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
-		<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
-		<!--eruda setting-->
-		<script src="//cdn.jsdelivr.net/npm/eruda"></script>
-		<script src="//cdn.jsdelivr.net/npm/eruda-code"></script>
-		<script>
-			eruda.init();
-			eruda.add(erudaCode);
-		</script>
-		<!--cdn (jquery markdown)-->
-		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
-		<script src="https://cdn.bootcdn.net/ajax/libs/marked/2.0.3/marked.js"></script>
-		<!--cd ionic-->
-		<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-		<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
-		<!--import style-->
-		<link rel="stylesheet" href="./style.css" />
-		<link rel="stylesheet" href="./sspai.css" />
-		<!--share-->
-		<script src="./NativeShare.js"></script>
-		<!--import module-->
-		<script type="module">
-			import {
-				modalController,
-				alertController,
-				menuController,
-				loadingController
-			} from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
-			window.modalController = modalController;
-			window.alertController = alertController;
-			window.menuController = menuController;
-			window.loadingController = loadingController;
-		</script>
-		<script>
-		</script>
-
-	</head>
-	<body onload="">
-		<div class="show-me"><div class="ion-padding">
-			<h2>一个基于ionic5的个人博客网站</h2>
-			<h2>创建者：Qinaonan</h2>
-			<ion-text>注意：我姓qin，不姓qi</ion-text>
-			<h2>关于我</h2>
-			<ion-text>一名有着悠久历史的十八线城市的初中生<br></ion-text>
-			<ion-text>嗯，仅此而已<br></ion-text>
-			<ion-text>（我的语文比较差，所以部分用词可能会词不达意，请见谅）</ion-text>
-			<h3>个人作品</h3>
-			<ion-text>只有这个网站和一些文章...</ion-text>
-			<h2>关于网站</h2>
-			<ion-text>此网站主要内容为一些小技巧<br /></ion-text>
-			<ion-text>并且，该网站以便捷，效率为首，因此所有文章会先将引用与参考资料，以及原文地址先行写出，以供读者更好的参考,和找到自己想找的内容</ion-text>
-			<ion-text>(此网站建立于2020.2.12，同时也是我的生日)，</ion-text>
-
-			<br /><br />
-			<ion-button onclick="outShowMe()">返回</ion-button>
-			
-			</div></div>
-		<div class="main-page">
-			<div class="wait">请稍后，正在获取文章</div>
-			<div class="in" onclick="showupdate()">
-				<p style="color:gray" id="title">system</p>
-				<p id="content">hello world</p>
-			</div>
-			<div id="ionIon">
-				<ion-app id="ionApp" class="">
-					<div class="ion-page" id="main-content">
-						<ion-nav id="tab-ion" root="tab-page">
-						</ion-nav>
-					</div>
-				</ion-app>
-				<div class="passage">
-					<ion-nav id="cbl-c" root="cbl-p">
-					</ion-nav>
-				</div>
-			</div>
-			<script id="tab" type="text/template">
-				<ion-nav root="nav-home" id="ion-nav"></ion-nav>
-	</ion-tabs>
-	</script>
-			<script id="cbl" type="text/template">
-				<ion-content><div id="p"><p style="font-size: 60px;color:gray">hello</p></div></ion-content>
-	</script>
-			<script id="set" type="text/template">
-				<ion-header translucent>
-			<ion-toolbar >
-				<ion-title>设置</ion-title>
-				<ion-buttons><ion-back-button defaultHref="/">返回</ion-back-button></ion-buttons>
-			</ion-toolbar>
-		</ion-header>
-						
-		<ion-content fullscreen class="ion-padding">
-			<ion-list>
-				<ion-item lines="full">
-					<ion-icon slot="start" name="moon"></ion-icon>
-					<ion-label>
-						切换暗黑模式
-					</ion-label>
-					<ion-toggle id="themeToggle" slot="end"></ion-toggle>
-				</ion-item>
-				<ion-item lines="full" onclick="modalpage('set-page','#tab-ion','only')">
-					<ion-label>更新日志</ion-label>
-				</ion-item>
-			</ion-list>
-		</ion-content>
-	</script>
-			<script id="page" type="text/template">
-				<ion-header translucent>
-			<ion-toolbar >
-				<ion-title>介绍</ion-title>
-				<ion-buttons slot="start">
-					<ion-button onclick="tabnav.push('nav-set')"><ion-icon name="cog-outline"></ion-icon></ion-button>
-				</ion-buttons>
-				<ion-buttons slot="end">
-					<ion-button onclick="modalpage('passage-home','#tab-ion','more')"><ion-icon name="newspaper-outline"></ion-icon></ion-button>
-				</ion-buttons>
-			</ion-toolbar>
-		</ion-header>
-
-		<ion-content  fullscreen style='font-family:"Courier New", Courier, monospace;'>
-			<div class="ion-padding" style="width:100%;background-color:black;color:white;"><ion-text style='font-family:"Courier New", Courier, monospace;font-size:14px;'>
-			Welcome to my website!<br /><br />
-			[root@alarm ~]#info -w<br /><br />
-			</ion-text></div>
-			<div class="ion-padding" style="width:100%;height:calc(100vh - 300px">
-				<h1 style="text-align: center;">莫听穿林打叶声</h1>	
-				<ion-button onclick="modalpage('passage-home','#tab-ion','more')">进入文章界面</ion-button>
-				<ion-button onclick="showMe()">点击，看看网站介绍</ion-button>
-			</div>
-
-		</ion-content>
-	</script>
-			<script id="page1" type="text/template">
-				<ion-header translucent>
-				<ion-toolbar>
-					<ion-title  id="passage-title"></ion-title>
-					<ion-buttons onclick="window.location.hash=''" slot="start">
-						<div class="back-button">
-							<ion-back-button defaultHref="/"></ion-back-button>
-						</div>
-					</ion-buttons>
-					<ion-buttons slot="end">
-						<ion-button onclick="share(document.title,document.title)"><ion-icon name="share-outline"></ion-icon></ion-button>
-					</ion-buttons>
-				</ion-toolbar>
-			</ion-header>
-			<ion-content fullscreen>
-				<div id="passage" class="ion-padding"></div>
-				<div id="gitalk"></div>
-			</ion-content>
-			</script>
-			<script id="modal" type="text/template">
-				<ion-nav id="nav-modal"></ion-nav>
-	</script>
-			<script id="moda-page" type="text/template">
-				<ion-header translucent>
-			<ion-toolbar >
-				<ion-title>更新日志</ion-title>
-			</ion-toolbar>
-		</ion-header>
-		<ion-content fullscreen class="ion-padding">
-
-			<ion-text >
-				
-			</ion-text>
-			<ion-text color="warning">更新内容:</ion-text>
-			<ion-text color="success">
-				<h2 id="302021810">3.4</h2>
-				<blockquote>
-					<ol>
-						<li>重新设计主界面</li>
-					</ol>
-				</blockquote>
-			</ion-text>
-			<ion-text color="danger">已知问题：</ion-text>
-			<ion-text color="success">
-				<blockquote>
-					<ol>
-						<li>分辨率从iPhone至iPad时，阅读的文章无法切换至侧面，分辨率从ipad切换至iPhone同理</li>
-						<li>在iPad处于分屏模式时，快速改变浏览器窗口大小，无法正常使用适配ipad分辨率</li>
-						<li>生日功能无法正常运行</li>
-					</ol>
-				</blockquote>
-			</ion-text>
-			<ion-text color="danger">期望目标：</ion-text>
-			<ion-text color="success">
-				<blockquote>
-					<ol>
-						<li>文章统一归档</li>
-						<li>文章自动按照时间排序</li>
-						<li>文章与文章内搜索搜索</li>
-						<li>文章分享功能(已完成)</li>
-						<li>想到其他的什么再写吧...</li>
-					</ol>
-				</blockquote>
-			</ion-text>
-			<ion-button expand="block" slot="fixed" onclick="aleardy()"
-					style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用</ion-button>
-		</ion-content>
-	</script>
-			<script id="moda-bi" type="text/template">
-				<ion-header translucent>
-			<ion-toolbar>
-				<ion-title><ion-text color="dark">祝贺</ion-text></ion-title>
-			</ion-toolbar>
-		</ion-header>
-		<ion-content fullscreen class="ion-padding">
-			<ion-text id="text"></ion-text>
-			<ion-button expand="block" slot="fixed" onclick="bic()" style="padding:4px;width: 100%;bottom: 5px;">继续</ion-button>
-		</ion-content>
-	</script>
-			<script id="passage-home" type="text/template">
-				<ion-nav id="passage-nav" root="passage-root"></ion-nav>
-	</script>
-			<script id="passage-root" type="text/template">
-				<ion-toolbar >
-			<ion-title>文章</ion-title>
-			<ion-buttons id="modal-back" slot="start">
-				{{button}}
-			</ion-buttons>
-		</ion-toolbar>
-		<ion-content>
-			<div id="list">
-			</div>
-		</ion-content>
-	</script>
-			<script id="update" type="text/template">
-## 1.0(2020.2.12)
->1. 网站建立  
->2. 基础UI完善(ionic 1.0)  
->3. 文章请求添加(只请求,不渲染)  
-## 1.1
->1. 增添新界面,即文章界面
->2. 切换主界面至文章界面采用悬浮窗  
->3. 文章功能实装,渲染使用src:doc    
-## 1.2
->1. 切换主界面至文章界面采用侧边栏  
->2. 增加疫情地图  
-## 1.3
->1. 在设置增加了vconsole调试  
->2. 添加了疫情地图选项,疫情地图不是绝对选项  
-## 2.0(2021.7.3)
->1. 更新ionic至4.0,重写所有代码  
->2. 适配暗黑模式
->3. 添加了更新提醒
->4. 生日请求添加(理论上这是一个个人blog,所以有此更新)(只请求)
->5. 移除疫情地图与vconsole调试
->6. Bug：处于暗黑模式进入网页网页不使用暗黑模式样式（已修复）
-## 2.1
->1. 生日功能实装
->2. 改进文章栏,现在文章列表有一个指定json文件(path:./passage/passage-list.json)
->3. 修复处于暗黑模式进入网页不启用网页暗黑模式的问题
->4. 在设置界面添加更新日志
->5. 添加eruda为调试
->6. Bug:生日功能无法正常运行(未修复)
-## 2.2
->1. 适配iPad分辨率
->2. Bug:分辨率从iPhone至iPad时，阅读的文章无法切换至侧面，分辨率从ipad切换至iPhone同理(未修复)
->3. Bug:在iPad处于分屏模式时，快速改变浏览器窗口大小，无法正常使用适配ipad分辨率(未修复)
-## 2.2.1
->1. Bug:iPad分辨率modal框错位（擦边修复）
-## 2.3
->1. 更新提示已不再直接弹出，更换为ios信息式提示框，不再过度打扰用户
->2. 文章列表样式更新
->3. markdown样式更新，更换为少数派风格（ https://sspai.com/post/43873 ）
->4. Bug:文章列表出现错位情况（未修复）
-## 3.0(2021.8.10)
->1. 重写UI，使其更像一个博客，而不是一个应用（旧版UI: https://qjasn.gitee.io/qikx/old_index.html )
->2. 添加分享功能，快速分享文章
->3. 重写主页
->4. Bug：分辨率从iPhone至iPad时，会有错位等bug出现，请不要在阅读文章时切换分辨率，以防丢失阅读进度（未修复）
-## 3.1(2021.8.18)
->1. 评论系统上线
-## 3.2(2021.9)
->1. 不同的操作系统现在有不同的显示界面了
-## 3.3(2021.11.6)
->1. 评论系统完善
->2. 放弃gitee pages
-## 3.4
->1. 重新设计主界面
+        window.toastController = toastController
+        window.modalController = modalController;
+        window.alertController = alertController;
+        window.loadingController = loadingController;
     </script>
-		</div>
-		<script src="script.js">
-		</script>
+    <script src="js.js"></script>
+</head>
 
-	</body>
+<body>
+<ion-app id="ionApp">
+    <div id="all-screen">
+        <ion-nav root="nav-first" id="iphone-screen"></ion-nav>
+        <ion-nav root="nav-ipad" id="ipad-screen"></ion-nav>
+    </div>
+</ion-app>
+<!--Template-->
+<!--nav-first-->
+<script type="text/template" id="nav-first">
+    <ion-nav root="nav-tab"></ion-nav>
+</script>
+<!--nav-tab-->
+<script type="text/template" id="nav-tab">
+    <ion-tabs>
+        <ion-tab tab="home">
+            <ion-nav root="nav-home"></ion-nav>
+        </ion-tab>
+        <ion-tab tab="set">
+            <ion-nav root="nav-set"></ion-nav>
+        </ion-tab>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="home">
+                <ion-label>主页</ion-label>
+                <ion-icon name="home-outline"></ion-icon>
+            </ion-tab-button>
+            <ion-tab-button tab="set">
+                <ion-label>设置</ion-label>
+                <ion-icon name="cog-outline"></ion-icon>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-tabs>
+</script>
+<script id="nav-set" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>偏好设置</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-list-header> 暗黑模式</ion-list-header>
+            <ion-item lines="full">
+                <ion-icon slot="start" name="moon"></ion-icon>
+                <ion-label>
+                    跟随系统
+                </ion-label>
+                <ion-toggle id="autodark" slot="end"></ion-toggle>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-icon slot="start" name="moon"></ion-icon>
+                <ion-label>
+                    启用
+                </ion-label>
+                <ion-toggle disabled="true" id="darkmode" slot="end"></ion-toggle>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-radio-group id="styles">
+                <ion-list-header>
+                    <ion-label>样式</ion-label>
+                </ion-list-header>
+
+                <ion-item lines="full">
+                    <ion-icon slot="end" name="logo-android"></ion-icon>
+                    <ion-label>
+                        Material Design
+                    </ion-label>
+                    <ion-radio slot="start" value="md"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="full">
+                    <ion-icon slot="end" name="phone-portrait-outline"></ion-icon>
+                    <ion-label>
+                        iOS
+                    </ion-label>
+                    <ion-radio slot="start" value="ios"></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+            <ion-list>
+                <ion-list-header>关于</ion-list-header>
+                <ion-item lines="full">本网站使用<a href="https://ionicframework.com/">ionic</a>作为框架
+                    <ion-icon slot="end" name="logo-ionic"></ion-icon>
+                </ion-item>
+                <ion-item lines="full">使用<a href="https://github.com/">Github Pages</a>网站托管
+                    <ion-icon slot="end" name="logo-github"></ion-icon>
+                </ion-item>
+                <ion-item lines="full">除过ionic以外，本网站其他全部为原生JS
+                    <ion-icon slot="end" name="logo-javascript"></ion-icon>
+                </ion-item>
+                <ion-item lines="full">支持：
+                    <ion-icon name="logo-chrome"></ion-icon>
+                    Chromium 60+
+                    <ion-icon name="logo-firefox"></ion-icon>
+                    Firefox 63+
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-icon name="logo-apple"></ion-icon>
+                    Safari 13+
+                    <ion-icon name="logo-edge"></ion-icon>
+                    Edge 60+
+                </ion-item>
+                <ion-item lines="full">
+                    感谢某位同学，没有她，这个网站将不会再次更新
+                </ion-item>
+            </ion-list>
+            <ion-item lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
+                <ion-label>更新日志</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</script>
+<script id="nav-home" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>主页</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <div id="test">main</div>
+    </ion-content>
+</script>
+<script id="nav-modal" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start" id="modal-back"
+                         onclick="gobackroot('#passageNav');document.getElementById('title2').innerText='';text=false;dismissModal()">
+                <ion-text color="primary">完成</ion-text>
+            </ion-buttons>
+            <ion-title>
+                <ion-text id="title1"></ion-text>
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content style="padding: 10px">
+        <ion-nav root="passage-show" id="passageNav"
+                 style="position: absolute;width: calc(100vw - 8px);left: 8px"></ion-nav>
+    </ion-content>
+
+</script>
+<script id="nav-ipad" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start" id="ipad-back" style="opacity:0"
+                         onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText=''">
+                <ion-text color="primary">
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                    返回
+                </ion-text>
+            </ion-buttons>
+            <ion-title>
+                <ion-text id="title2" class="ion-padding"></ion-text>
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-nav root="nav-passage" id="passageNav"></ion-nav>
+    </ion-content>
+</script>
+<script id="nav-passage" type="text/template">
+    <div style="text-align:center;margin: 0 auto;position: absolute; left: 0;right: 0;top: 50%; transtform: translateY(-50%);font-size: 40px;color:gray">
+        Hello world!
+    </div>
+</script>
+<script id="nav-update" type="text/template">
+
+    <ion-content fullscreen class="ion-padding">
+
+        <ion-text>
+
+        </ion-text>
+        <ion-text color="warning">更新内容:</ion-text>
+        <ion-text color="success">
+            <h2 id="302021810">3.4</h2>
+            <blockquote>
+                <ol>
+                    <li>重新设计主界面</li>
+                </ol>
+            </blockquote>
+        </ion-text>
+        <ion-text color="danger">已知问题：</ion-text>
+        <ion-text color="success">
+            <blockquote>
+                <ol>
+                    <li>分辨率从iPhone至iPad时，阅读的文章无法切换至侧面，分辨率从ipad切换至iPhone同理</li>
+                    <li>在iPad处于分屏模式时，快速改变浏览器窗口大小，无法正常使用适配ipad分辨率</li>
+                    <li>生日功能无法正常运行</li>
+                </ol>
+            </blockquote>
+        </ion-text>
+        <ion-text color="danger">期望目标：</ion-text>
+        <ion-text color="success">
+            <blockquote>
+                <ol>
+                    <li>文章统一归档</li>
+                    <li>文章自动按照时间排序</li>
+                    <li>文章与文章内搜索搜索</li>
+                    <li>文章分享功能(正在重写)</li>
+                    <li>想到其他的什么再写吧...</li>
+
+                </ol>
+            </blockquote>
+        </ion-text>
+        <ion-button expand="block" slot="fixed"
+                    onclick="text=false;if(display=='iphone'){dismissModal()}else{gobackroot('#passageNav')}"
+                    style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用
+        </ion-button>
+    </ion-content>
+
+</script>
+</body>
 
 </html>
