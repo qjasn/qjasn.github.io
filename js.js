@@ -407,10 +407,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 3.5) {
-        localStorage.update = 3.5;
+    if (localStorage.update == 3.51) {
+        localStorage.update = 3.51;
     } else {
-        localStorage.update = 3.5;
+        localStorage.update = 3.51;
         upadtealert()
     }
 }
