@@ -181,7 +181,7 @@ function passageShow() {
                     item.des +
                     `</ion-card-header>` +
                     `</ion-card>`
-                document.getElementById("test").innerHTML = passageList
+                document.getElementById("list").innerHTML = passageList
                 /*
                 gitalk[i] = new Gitalk({
                      clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
