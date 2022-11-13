@@ -101,6 +101,8 @@ start = function () {
     checkWindow()
     //update
     checkupdate()
+    //CDN warns
+    warnCDN()
 }
 
 startSet = function () {
@@ -147,6 +149,10 @@ startSet = function () {
     styletoggle.addEventListener('ionChange', (ev) => {
         localStorage.style = styletoggle.value
         alertReload();
+    })
+    const cdnSwitch = document.querySelector('#useCdn')
+    cdnSwitch.addEventListener('ionChange',(ev)=>{
+
     })
 
 }
@@ -362,7 +368,7 @@ async function wait(s) {
 
 }
 
-async function alertReload() {
+async function alertReload(type,url) {
     const alert = await alertController.create({
         header: '提示',
         message: '更改需在刷新网页后生效',

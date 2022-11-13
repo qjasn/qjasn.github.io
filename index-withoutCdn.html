@@ -14,9 +14,9 @@
     <!--marked-->
     <script src="./http_cdn.bootcdn.net_ajax_libs_marked_2.0.3_marked.js"></script>
     <!--ionic-->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <script type="module" src="./ionic/ionic.esm.js"></script>
+    <script nomodule src="./ionic/ionic.js"></script>
+    <link rel="stylesheet" href="./ionic/css/ionic.bundle.css"/>
     <!--gitalk-->
     <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
     <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
@@ -30,7 +30,7 @@
             alertController,
             modalController,
             toastController
-        } from "https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js";
+        } from "./ionic/index.esm.js";
 
         window.toastController = toastController
         window.modalController = modalController;
@@ -38,11 +38,19 @@
         window.loadingController = loadingController;
     </script>
     <script>
-        function warnCDN() {
-            console.log("This page use cdn")
+        async function warnCDN() {
+            const toast = await toastController.create({
+                color: 'dark',
+                duration: 3000,
+                message: '<ion-text>您正在不使用CDN浏览网页，这可能会影响加载速度</ion-text>',
+
+            });
+
+            await toast.present();
         }
     </script>
     <script src="js.js"></script>
+
 </head>
 
 <body>
@@ -92,9 +100,9 @@
                 <ion-label>
                     使用CDN加载外部文件（中国大陆建议开启）
                 </ion-label>
-                <ion-toggle checked="true" id="useCdn" slot="end"></ion-toggle>
+                <ion-toggle checked="false" id="useCdn" slot="end"></ion-toggle>
             </ion-item>
-            <ion-list-header>暗黑模式</ion-list-header>
+            <ion-list-header> 暗黑模式</ion-list-header>
             <ion-item lines="full">
                 <ion-icon slot="start" name="moon"></ion-icon>
                 <ion-label>
