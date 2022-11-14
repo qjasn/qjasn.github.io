@@ -152,7 +152,7 @@ startSet = function () {
     })
     const cdnSwitch = document.querySelector('#useCdn')
     cdnSwitch.addEventListener('ionChange',(ev)=>{
-
+        console.log(ev.detail.checked)
     })
 
 }
@@ -170,7 +170,6 @@ function passageShow() {
             passageJson = JSON.parse(httpget.responseText)
             let json = JSON.parse(httpget.responseText);
             json.passage.forEach(function (item, i) {
-                console.log(passageList)
                 passageList = passageList +
                     `<ion-card onclick="passageGet('` + item.passagePath + `','` + item
                         .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
@@ -243,7 +242,6 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 						</ion-card>` +
                         p+`</div></ion-content>`
                 }
-                console.log(p)
                 number = num
                 toPage('passage-show')
             }
@@ -354,7 +352,6 @@ function gobackroot(page) {
 }
 
 getNav = function (id) {
-    console.log(id)
     return document.getElementById(id).innerHTML
 }
 
