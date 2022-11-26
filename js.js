@@ -71,6 +71,22 @@ customElements.define(
         }
     }
 )
+customElements.define(
+    'nav-more',
+    class NavMore extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = getNav("nav-more")
+        }
+    }
+)
+customElements.define(
+    'nav-tools',
+    class NavTools extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = getNav("nav-tools")
+        }
+    }
+)
 //var
 var darkauto, darkmode, darktoggle
 //Start running
@@ -100,6 +116,8 @@ start = function () {
     checkupdate()
     //CDN warns
     warnCDN()
+    //From sharing
+    SharingCheck()
 }
 
 startSet = function () {
@@ -152,7 +170,8 @@ startSet = function () {
 //Get passage
 var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest();
 var passageJson, passageList = "";
-var gitalk=new Array();
+var gitalk = new Array();
+
 function passageShow() {
 
     httpget.open('GET', 'passage/passage-list.json', true);
@@ -164,12 +183,10 @@ function passageShow() {
             let json = JSON.parse(httpget.responseText);
             json.passage.forEach(function (item, i) {
                 passageList = passageList +
-                    `<ion-card onclick="passageGet('` + item.passagePath + `','` + item
-                        .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
-                    item.des + `',` + i + `)">
+                    `<ion-card>
 					<ion-card-header>
 						<ion-sub-title>` +
-                    item.time +
+                    item.time + `  作者：` + item.author +
                     `</ion-sub-title>` +
                     `<ion-card-title>` +
                     item.passageName +
@@ -177,9 +194,14 @@ function passageShow() {
                     `</ion-card-header>` +
                     `<ion-card-content>` +
                     item.des +
-                    `</ion-card-header>` +
+                    `</ion-card-content>` +
+                    `<ion-button onclick="passageGet('` + item.passagePath + `','` + item
+                        .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
+                    item.des + `',` + i + `)" fill="clear">阅读</ion-button>`+
                     `</ion-card>`
-                document.getElementById("list").innerHTML = passageList
+                if(i<6) {
+                    document.getElementById("list").innerHTML = passageList
+                }
                 /*
                 gitalk[i] = new Gitalk({
                      clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
@@ -195,14 +217,16 @@ function passageShow() {
 
 
             })
+            document.getElementById("list").innerHTML += "<div style='text-align: center'><ion-text color='medium'><sub>主页最多显示5个文章，其余请在更多页面中查看</sub></ion-text></div>"
         }
     }
 }
 
 var p, passagen, describe, number, title, text;
-var fzfp=`
+var fzfp = `
 <h3>404 not found</h3>
 `
+
 function passageGet(passage, passagename, music, musicn, des, num) {
     document.title = passagename
     title = passagename
@@ -233,7 +257,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 								</audio>
 							</ion-card-content>
 						</ion-card>` +
-                        p+`</div></ion-content>`
+                        p + `</div></ion-content>`
                 }
                 number = num
                 toPage('passage-show')
@@ -248,12 +272,12 @@ function toPage(page) {
     nav = document.querySelectorAll("#passageNav")
 
     if (display == "ipad") {
-        document.getElementById("title2").innerText=title
+        document.getElementById("title2").innerText = title
         fadeIn(document.getElementById("ipad-back"), 10);
         nav[0].push(page)
     } else {
         openCardModal().finally(function () {
-            document.getElementById("title2").innerText=title
+            document.getElementById("title2").innerText = title
             nav = document.querySelectorAll("#passageNav")
             nav[0].push(page)
         })
@@ -358,7 +382,7 @@ async function wait(s) {
 
 }
 
-async function alertReload(type,url) {
+async function alertReload(type, url) {
     const alert = await alertController.create({
         header: '提示',
         message: '更改需在刷新网页后生效',
@@ -403,10 +427,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 3.51) {
-        localStorage.update = 3.51;
+    if (localStorage.update == 0.361) {
+        localStorage.update = 0.361;
     } else {
-        localStorage.update = 3.51;
+        localStorage.update = 0.361;
         upadtealert()
     }
 }
@@ -436,15 +460,24 @@ function showupdate() {
     toPage("passage-show")
 
 }
+
 //share
+/*
+old
+ 
 var nativeShare = new NativeShare()
 
 function share(title, des) {
     var shareData = {
         title: title,
-        desc: title,
+        desc: des,
         // 不要过于依赖以下两个回调，很多浏览器是不支持的
     }
     nativeShare.setShareData(shareData)
     nativeShare.call()
+}
+*/
+// new
+function SharingCheck() {
+
 }

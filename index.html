@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Qjasn's Blog</title>
     <meta name="color-scheme" content="light dark"/>
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3880ff"/>
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#eb445a"/>
@@ -63,6 +63,12 @@
         <ion-tab tab="home">
             <ion-nav root="nav-home"></ion-nav>
         </ion-tab>
+        <ion-tab tab="more">
+            <ion-nav root="nav-more"></ion-nav>
+        </ion-tab>
+        <ion-tab tab="tools">
+            <ion-nav root="nav-tools"></ion-nav>
+        </ion-tab>
         <ion-tab tab="set">
             <ion-nav root="nav-set"></ion-nav>
         </ion-tab>
@@ -70,6 +76,14 @@
             <ion-tab-button tab="home">
                 <ion-label>主页</ion-label>
                 <ion-icon name="home-outline"></ion-icon>
+            </ion-tab-button>
+            <ion-tab-button tab="more">
+                <ion-label>更多</ion-label>
+                <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-tab-button>
+            <ion-tab-button tab="tools">
+                <ion-label>工具</ion-label>
+                <ion-icon name="hammer-outline"></ion-icon>
             </ion-tab-button>
             <ion-tab-button tab="set">
                 <ion-label>设置</ion-label>
@@ -159,7 +173,7 @@
                     感谢某位同学，没有她，这个网站将不会再次更新
                 </ion-item>
             </ion-list>
-            <ion-item lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
+            <ion-item button lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
                 <ion-label>更新日志</ion-label>
             </ion-item>
         </ion-list>
@@ -173,6 +187,26 @@
     </ion-header>
     <ion-content>
         <div id="list"></div>
+    </ion-content>
+</script>
+<script id="nav-more" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>更多</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-text>正在建设</ion-text>
+    </ion-content>
+</script>
+<script id="nav-tools" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>工具</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-text>正在建设</ion-text>
     </ion-content>
 </script>
 <script id="nav-modal" type="text/template">
@@ -226,10 +260,12 @@
         </ion-text>
         <ion-text color="warning">更新内容:</ion-text>
         <ion-text color="success">
-            <h2 id="302021810">3.5.2</h2>
+            <h2 id="302021810">0.3.6a</h2>
             <blockquote>
                 <ol>
-                    <li>更新是否使用CDN选项</li>
+                    <li>调整部分UI</li>
+                    <li>增加两个Tab页面</li>
+                    <li>为分享功能铺路</li>
                 </ol>
             </blockquote>
         </ion-text>

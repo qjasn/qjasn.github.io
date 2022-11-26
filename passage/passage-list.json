@@ -6,7 +6,8 @@
       "passagePath": "about",
       "music": "nothing",
       "des": "一些想说的话",
-      "musicPath": "none"
+      "musicPath": "none",
+      "author": "Qjasnfinder"
     },
     {
       "time": "2021.8.8",
@@ -14,7 +15,8 @@
       "passagePath": "qemu",
       "music": "nothing",
       "des": "用不起昂贵的parallels desktop虚拟机的学生党可以试试",
-      "musicPath": "none"
+      "musicPath": "none",
+      "author": "Qjasnfinder"
     }
   ]
 }
