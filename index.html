@@ -17,7 +17,7 @@
     <!--ionic-->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
     <!--gitalk-->
     <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
     <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
@@ -238,18 +238,18 @@
 <script id="nav-ipad" type="text/template">
     <ion-header>
         <ion-toolbar>
-            <ion-buttons slot="start" id="ipad-back" style="opacity:0"
-                         onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText='';location.hash='';document.title='Qjasn\'s Blog'">
-                <ion-text color="primary">
-                    <ion-icon name="chevron-back-outline"></ion-icon>
-                    返回
-                </ion-text>
-            </ion-buttons>
-            <ion-buttons slot="end">
-                <ion-button onclick="share('document.title','document.title')">
-                    <ion-icon name="share-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
+                <ion-buttons slot="start" id="ipad-back" style="opacity:0"
+                             onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-share'), 10);fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText='';location.hash='';document.title='Qjasn\'s Blog'">
+                    <ion-text color="primary">
+                        <ion-icon name="chevron-back-outline"></ion-icon>
+                        返回
+                    </ion-text>
+                </ion-buttons>
+                <ion-buttons slot="end" id="ipad-share" style="opacity:0">
+                    <ion-button onclick="share('document.title','document.title')">
+                        <ion-icon name="share-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             <ion-title>
                 <ion-text id="title2" class="ion-padding"></ion-text>
             </ion-title>

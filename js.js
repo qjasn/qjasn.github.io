@@ -275,6 +275,7 @@ function toPage(page) {
     if (display == "ipad") {
         document.getElementById("title2").innerText = title
         fadeIn(document.getElementById("ipad-back"), 10);
+        fadeIn(document.getElementById("ipad-share"), 10);
         nav[0].push(page)
     } else {
         openCardModal().finally(function () {
