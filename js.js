@@ -26,6 +26,7 @@ customElements.define(
         connectedCallback() {
             this.innerHTML = getNav('nav-home')
             passageShow()
+
         }
     }
 )
@@ -91,7 +92,7 @@ customElements.define(
 var darkauto, darkmode, darktoggle
 //Start running
 if (localStorage.style == undefined) {
-    localStorage.style = 'ios'
+    localStorage.style = 'md'
 }
 if (location.search.split("&")[0] !== "?ionic:mode=" + localStorage.style) {
     location.search = "?ionic:mode=" + localStorage.style
@@ -116,8 +117,7 @@ start = function () {
     checkupdate()
     //CDN warns
     warnCDN()
-    //From sharing
-    SharingCheck()
+
 }
 
 startSet = function () {
@@ -197,9 +197,9 @@ function passageShow() {
                     `</ion-card-content>` +
                     `<ion-button onclick="passageGet('` + item.passagePath + `','` + item
                         .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
-                    item.des + `',` + i + `)" fill="clear">阅读</ion-button>`+
+                    item.des + `',` + i + `)" fill="clear">阅读</ion-button>` +
                     `</ion-card>`
-                if(i<6) {
+                if (i < 6) {
                     document.getElementById("list").innerHTML = passageList
                 }
                 /*
@@ -217,6 +217,7 @@ function passageShow() {
 
 
             })
+            SharingCheck();
             document.getElementById("list").innerHTML += "<div style='text-align: center'><ion-text color='medium'><sub>主页最多显示5个文章，其余请在更多页面中查看</sub></ion-text></div>"
         }
     }
@@ -398,6 +399,20 @@ async function alertReload(type, url) {
 
     await alert.present();
 }
+async function alertIonic(head,message,button) {
+    let headT=head;
+    let messageT=message;
+    let buttonT=button;
+    const alert = await alertController.create({
+        header: headT,
+        message: messageT,
+        buttons:buttonT,
+        backdropDismiss: false
+    });
+
+    await alert.present();
+}
+
 
 let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -427,10 +442,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 0.361) {
-        localStorage.update = 0.361;
+    if (localStorage.update == 0.362) {
+        localStorage.update = 0.362;
     } else {
-        localStorage.update = 0.361;
+        localStorage.update = 0.362;
         upadtealert()
     }
 }
@@ -464,7 +479,7 @@ function showupdate() {
 //share
 /*
 old
- 
+*/
 var nativeShare = new NativeShare()
 
 function share(title, des) {
@@ -474,10 +489,33 @@ function share(title, des) {
         // 不要过于依赖以下两个回调，很多浏览器是不支持的
     }
     nativeShare.setShareData(shareData)
-    nativeShare.call()
+    try {
+        nativeShare.call()
+    }catch(err){
+        alertIonic("函数调用","该浏览器不支持调用分享函数，请复制该页面地址进行分享",[{text:'确定'}])
+    }
 }
-*/
+
+
 // new
 function SharingCheck() {
-
+    let Hash = location.hash
+    try {
+        Hash = Hash.split("#")[1];
+        console.log(Hash)
+        let type = Hash.split(",")[0];
+        switch (type) {
+            case "passage":
+                console.log(passageJson);
+                passageJson.passage.forEach(function (item, i) {
+                    if (item.passagePath == Hash.split(",")[1]) {
+                        console.log(Hash.split(",")[1])
+                        passageGet(item.passagePath, item.passageName, item.musicPath, item.musicName, item.des, i)
+                    }
+                })
+                break;
+        }
+    }catch(err){
+        console.log("NO Hash")
+    }
 }

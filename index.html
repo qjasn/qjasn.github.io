@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Qjasn's Blog</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta name="color-scheme" content="light dark"/>
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3880ff"/>
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#eb445a"/>
@@ -206,15 +207,22 @@
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <ion-text>正在建设</ion-text>
+        <ion-list>
+            <ion-item lines="full">随便写的小玩意</ion-item>
+        </ion-list>
     </ion-content>
 </script>
 <script id="nav-modal" type="text/template">
     <ion-header>
         <ion-toolbar>
             <ion-buttons slot="start" id="modal-back"
-                         onclick="gobackroot('#passageNav');document.getElementById('title2').innerText='';text=false;dismissModal()">
+                         onclick="gobackroot('#passageNav');document.getElementById('title2').innerText='';text=false;dismissModal();location.hash='';document.title='Qjasn\' Blog'">
                 <ion-text color="primary">完成</ion-text>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button onclick="share('document.title','document.title')">
+                    <ion-icon name="share-outline"></ion-icon>
+                </ion-button>
             </ion-buttons>
             <ion-title>
                 <ion-text id="title1"></ion-text>
@@ -231,11 +239,16 @@
     <ion-header>
         <ion-toolbar>
             <ion-buttons slot="start" id="ipad-back" style="opacity:0"
-                         onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText=''">
+                         onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText='';location.hash='';document.title='Qjasn\'s Blog'">
                 <ion-text color="primary">
                     <ion-icon name="chevron-back-outline"></ion-icon>
                     返回
                 </ion-text>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button onclick="share('document.title','document.title')">
+                    <ion-icon name="share-outline"></ion-icon>
+                </ion-button>
             </ion-buttons>
             <ion-title>
                 <ion-text id="title2" class="ion-padding"></ion-text>
@@ -260,12 +273,10 @@
         </ion-text>
         <ion-text color="warning">更新内容:</ion-text>
         <ion-text color="success">
-            <h2 id="302021810">0.3.6a</h2>
+            <h2 id="302021810">0.3.6b</h2>
             <blockquote>
                 <ol>
-                    <li>调整部分UI</li>
-                    <li>增加两个Tab页面</li>
-                    <li>为分享功能铺路</li>
+                    <li>分享功能完成</li>
                 </ol>
             </blockquote>
         </ion-text>
@@ -279,7 +290,6 @@
                     <li>文章统一归档</li>
                     <li>文章自动按照时间排序</li>
                     <li>文章与文章内搜索搜索</li>
-                    <li>文章分享功能(正在重写)</li>
                     <li>想到其他的什么再写吧...</li>
 
                 </ol>
