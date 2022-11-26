@@ -68,9 +68,6 @@ customElements.define(
     class PassageShow extends HTMLElement {
         connectedCallback() {
             this.innerHTML = p
-            sleep(2000).then(function () {
-                gitalk[number].render('gitalk')
-            })
         }
     }
 )
@@ -149,10 +146,6 @@ startSet = function () {
     styletoggle.addEventListener('ionChange', (ev) => {
         localStorage.style = styletoggle.value
         alertReload();
-    })
-    const cdnSwitch = document.querySelector('#useCdn')
-    cdnSwitch.addEventListener('ionChange',(ev)=>{
-        console.log(ev.detail.checked)
     })
 
 }
