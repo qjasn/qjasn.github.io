@@ -89,7 +89,7 @@ customElements.define(
     }
 )
 //var
-var darkauto, darkmode, darktoggle
+var darkmode
 //Start running
 if (localStorage.style == undefined) {
     localStorage.style = 'md'
@@ -156,7 +156,7 @@ startSet = function () {
     });
     const styletoggle = document.querySelector('#styles')
     styletoggle.value = localStorage.style;
-    styletoggle.addEventListener('ionChange', (ev) => {
+    styletoggle.addEventListener('ionChange', () => {
         localStorage.style = styletoggle.value
         alertReload();
     })
@@ -165,7 +165,6 @@ startSet = function () {
 //Get passage
 var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest();
 var passageJson, passageList = "";
-var gitalk = new Array();
 
 function passageShow() {
 
@@ -330,13 +329,14 @@ async function openModal(opts = {}) {
     document.getElementById("title1").innerHTML = title
     currentModal = modal;
 }
-
+/*
 function openSheetModal() {
     openModal({
         breakpoints: [0, 0.2, 0.5, 1],
         initialBreakpoint: 0.2,
     });
 }
+ */
 
 async function openCardModal() {
     if (window.innerWidth > 770) {
@@ -350,7 +350,7 @@ async function openCardModal() {
     }
 }
 
-function dismissModal(mode) {
+function dismissModal() {
     if (currentModal) {
         currentModal.dismiss().then(() => {
             currentModal = null;
@@ -362,9 +362,9 @@ function dismissModal(mode) {
 //JavaScript
 function fadeIn(element, speed) {
     if (element.style.opacity != 1) {
-        var speed = speed || 30;
-        var num = 0;
-        var st = setInterval(function () {
+        let speed = speed || 30;
+        let num = 0;
+        let st = setInterval(function () {
             num++;
             element.style.opacity = num / 10;
             if (num >= 10) {
@@ -376,9 +376,9 @@ function fadeIn(element, speed) {
 
 function fadeOut(element) {
     if (element.style.opacity != 0) {
-        var speed = speed || 30;
-        var num = 10;
-        var st = setInterval(function () {
+        let speed = speed || 30;
+        let num = 10;
+        let st = setInterval(function () {
             num--;
             element.style.opacity = num / 10;
             if (num <= 0) {
@@ -387,7 +387,7 @@ function fadeOut(element) {
         }, speed);
     }
 }
-
+/*
 function btnIn() {
     fadeIn(div1, 100);
 }
@@ -395,6 +395,8 @@ function btnIn() {
 function btnOut() {
     fadeOut(div1, 100);
 }
+
+ */
 
 function gobackroot(page) {
     nav = document.querySelectorAll(page);
@@ -415,7 +417,7 @@ async function wait(s) {
 
 }
 
-async function alertReload(type, url) {
+async function alertReload() {
     const alert = await alertController.create({
         header: '提示',
         message: '更改需在刷新网页后生效',
@@ -433,13 +435,10 @@ async function alertReload(type, url) {
 }
 
 async function alertIonic(head, message, button) {
-    let headT = head;
-    let messageT = message;
-    let buttonT = button;
     const alert = await alertController.create({
-        header: headT,
-        message: messageT,
-        buttons: buttonT,
+        header: head,
+        message: message,
+        buttons: button,
         backdropDismiss: false
     });
 
@@ -447,7 +446,7 @@ async function alertIonic(head, message, button) {
 }
 
 
-let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+// let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 //display
 function checkWindow() {
