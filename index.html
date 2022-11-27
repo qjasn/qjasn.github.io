@@ -97,6 +97,7 @@
     <ion-header>
         <ion-toolbar>
             <ion-title>偏好设置</ion-title>
+            <ion-progress-bar id="progress" style="opacity:0"></ion-progress-bar>
         </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -184,9 +185,13 @@
     <ion-header>
         <ion-toolbar>
             <ion-title>主页</ion-title>
+            <ion-progress-bar id="progress" style="opacity:0"></ion-progress-bar>
         </ion-toolbar>
     </ion-header>
     <ion-content>
+        <ion-item color="success">
+            <ion-label>该网站仍处于Alpha测试阶段，<br>遇到问题请在github上提issus</ion-label>
+        </ion-item>
         <div id="list"></div>
     </ion-content>
 </script>
@@ -204,6 +209,7 @@
     <ion-header>
         <ion-toolbar>
             <ion-title>工具</ion-title>
+            <ion-progress-bar id="progress" style="opacity:0"></ion-progress-bar>
         </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -276,10 +282,10 @@
         </ion-text>
         <ion-text color="warning">更新内容:</ion-text>
         <ion-text color="success">
-            <h2 id="302021810">0.3.6c</h2>
+            <h2 id="302021810">0.3.6d</h2>
             <blockquote>
                 <ol>
-                    <li>修复已知问题</li>
+                    <li>对于文章的加载做出调整，现在已有加载进度提示</li>
                 </ol>
             </blockquote>
         </ion-text>

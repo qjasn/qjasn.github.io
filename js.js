@@ -229,10 +229,17 @@ function passageGet(passage, passagename, music, musicn, des, num) {
     describe = des;
     window.location.hash = "#passage," + passage
     text = "true"
-    wait(1000)
+    toastAlert("dark", 600, "<ion-text>正在加载，请耐心等待</ion-text>", true, 'bottom', '')
     httpRequest.open('GET', 'passage/' + passage + '.md', true); //get passage
     httpRequest.send(); //send require
+    let progressBar = document.querySelector("#progress")
+    progressBar.value = 0
+    fadeIn(document.getElementById("progress"), 5)
     httpRequest.onreadystatechange = function () {
+        let progressBar = document.querySelector("#progress")
+
+        progressBar.value = httpRequest.readyState * 0.25
+
         if (httpRequest.readyState == 4) {
             if (httpRequest.status == 404) {
                 p = "<ion-content class=\"ion-padding\"><div  class=\"ion-padding\">" + marked(fzfp) + "</div></ion-content>"
@@ -256,6 +263,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
                 }
                 number = num
                 Page('passage-show', "to", true)
+                fadeOut(document.getElementById("progress"))
             }
         }
     }
@@ -270,22 +278,22 @@ function Page(page, type, share) {
     switch (type) {
         case "to":
             if (display == "ipad") {
-                backButton.disabled="false"
+                backButton.disabled = "false"
                 document.getElementById("title2").innerText = title
                 fadeIn(document.getElementById("ipad-back"), 10);
                 if (share == true) {
                     console.log("share true")
-                    shareButton.disabled="false"
+                    shareButton.disabled = "false"
                     fadeIn(document.getElementById("ipad-share"), 10);
                 }
                 nav[0].push(page)
             } else {
-                backButton.disabled="false"
+                backButton.disabled = "false"
                 document.getElementById("title2").innerText = title
                 fadeIn(document.getElementById("ipad-back"), 10);
                 if (share == true) {
                     console.log("share true")
-                    shareButton.disabled="false"
+                    shareButton.disabled = "false"
                     fadeIn(document.getElementById("ipad-share"), 10);
                 }
                 openCardModal().finally(function () {
@@ -298,14 +306,14 @@ function Page(page, type, share) {
         case "backRoot":
             gobackroot(page)
             if (display == "ipad") {
-                backButton.disabled="true"
-                shareButton.disabled="true"
+                backButton.disabled = "true"
+                shareButton.disabled = "true"
                 fadeOut(document.getElementById('ipad-share'), 10);
                 fadeOut(document.getElementById('ipad-back'), 10);
             } else {
                 dismissModal();
-                backButton.disabled="true"
-                shareButton.disabled="true"
+                backButton.disabled = "true"
+                shareButton.disabled = "true"
                 fadeOut(document.getElementById('ipad-share'), 10);
                 fadeOut(document.getElementById('ipad-back'), 10);
             }
@@ -329,6 +337,7 @@ async function openModal(opts = {}) {
     document.getElementById("title1").innerHTML = title
     currentModal = modal;
 }
+
 /*
 function openSheetModal() {
     openModal({
@@ -362,7 +371,7 @@ function dismissModal() {
 //JavaScript
 function fadeIn(element, speed) {
     if (element.style.opacity != 1) {
-        let speed = speed || 30;
+        var speed = speed || 30;
         let num = 0;
         let st = setInterval(function () {
             num++;
@@ -376,7 +385,7 @@ function fadeIn(element, speed) {
 
 function fadeOut(element) {
     if (element.style.opacity != 0) {
-        let speed = speed || 30;
+        var speed = speed || 30;
         let num = 10;
         let st = setInterval(function () {
             num--;
@@ -387,6 +396,7 @@ function fadeOut(element) {
         }, speed);
     }
 }
+
 /*
 function btnIn() {
     fadeIn(div1, 100);
@@ -474,28 +484,30 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 0.363) {
-        localStorage.update = 0.363;
+    if (localStorage.update == 0.364) {
+        localStorage.update = 0.364;
     } else {
-        localStorage.update = 0.363;
-        upadtealert()
+        localStorage.update = 0.364;
+        toastAlert('dark', 2000,
+            '<ion-text>网站已更新</ion-text>', true, 'top', [
+                {
+                    side: 'end',
+                    text: '查看更新',
+                    handler: () => {
+                        showupdate()
+                    }
+                }])
     }
 }
 
-async function upadtealert() {
+async function toastAlert(color, duration, message, showCloseButton, position, buttons) {
     const toast = await toastController.create({
-        color: 'dark',
-        duration: 2000,
-        message: '<ion-text>网站已更新</ion-text>',
-        showCloseButton: true,
-        buttons: [
-            {
-                side: 'end',
-                text: '查看更新',
-                handler: () => {
-                    showupdate()
-                }
-            }]
+        color: color,
+        duration: duration,
+        message: message,
+        showCloseButton: showCloseButton,
+        position: position,
+        buttons: buttons
     });
 
     await toast.present();
@@ -504,7 +516,7 @@ async function upadtealert() {
 function showupdate() {
     p = getNav("nav-update")
     title = "更新日志"
-    Page("passage-show","to")
+    Page("passage-show", "to")
 
 }
 
@@ -524,7 +536,7 @@ function share(title, des) {
     try {
         nativeShare.call()
     } catch (err) {
-        alertIonic("函数调用", "该浏览器不支持调用分享函数，请复制该页面地址进行分享", [{text: '确定'}])
+        alertIonic("函数调用错误", "该浏览器不支持调用分享函数，请复制该页面地址进行分享", [{text: '确定'}])
     }
 }
 
