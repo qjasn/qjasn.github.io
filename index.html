@@ -195,14 +195,31 @@
         <div id="list"></div>
     </ion-content>
 </script>
+<script id="nav-more-archive" type="text/template">
+    <ion-content>
+        <ion-text>正在测试中(nav-more-archive)</ion-text>
+    </ion-content>
+</script>
+<script id="nav-more-talking" type="text/template">
+    <ion-content>
+        <ion-text>正在测试中(nav-more-talking)</ion-text>
+    </ion-content>
+</script>
 <script id="nav-more" type="text/template">
     <ion-header>
         <ion-toolbar>
-            <ion-title>更多</ion-title>
+            <ion-segment id="ionSegment" color="success" value="nav-more-archive">
+                <ion-segment-button value="nav-more-archive">
+                    <ion-label>文章归档</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="nav-more-talking">
+                    <ion-label>说说</ion-label>
+                </ion-segment-button>
+            </ion-segment>
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <ion-text>正在建设</ion-text>
+        <ion-nav root="nav-more-archive" id="nav-more-page"></ion-nav>
     </ion-content>
 </script>
 <script id="nav-tools" type="text/template">

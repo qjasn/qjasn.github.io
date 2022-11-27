@@ -77,6 +77,7 @@ customElements.define(
     class NavMore extends HTMLElement {
         connectedCallback() {
             this.innerHTML = getNav("nav-more")
+            startMore()
         }
     }
 )
@@ -85,6 +86,22 @@ customElements.define(
     class NavTools extends HTMLElement {
         connectedCallback() {
             this.innerHTML = getNav("nav-tools")
+        }
+    }
+)
+customElements.define(
+    'nav-more-archive',
+    class NavMoreArchive extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = getNav("nav-more-archive")
+        }
+    }
+)
+customElements.define(
+    'nav-more-talking',
+    class NavMoreTalking extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = getNav("nav-more-talking")
         }
     }
 )
@@ -161,6 +178,13 @@ startSet = function () {
         alertReload();
     })
 
+}
+startMore = function(){
+    const pageRoot = document.querySelector('#ionSegment')
+    pageRoot.addEventListener('ionChange',()=>{
+        const pageName = document.querySelector('#nav-more-page')
+        pageName.setRoot(pageRoot.value)
+    })
 }
 //Get passage
 var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest();
