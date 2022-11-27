@@ -135,7 +135,6 @@ startSet = function () {
         });
     } else if (localStorage.darkauto == 'true') {
         darkauto.checked = localStorage.darkauto
-        darkauto.checked = localStorage.darkauto
         darktoggle.addEventListener('ionChange', (ev) => {
             document.body.classList.toggle('dark', ev.detail.checked);
             result = ev.detail.checked
@@ -144,10 +143,6 @@ startSet = function () {
 
         darkmode = window.matchMedia('(prefers-color-scheme: dark)');
         darkmode.addListener((e) => checkToggle(e.matches));
-
-        function loadApp() {
-            checkToggle(prefersDark.matches);
-        }
 
         function checkToggle(shouldCheck) {
             darktoggle.checked = shouldCheck;
@@ -261,7 +256,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
                         p + `</div></ion-content>`
                 }
                 number = num
-                toPage('passage-show')
+                Page('passage-show', "to", true)
             }
         }
     }
@@ -269,22 +264,58 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 
 var nav
 
-function toPage(page) {
+function Page(page, type, share) {
     nav = document.querySelectorAll("#passageNav")
-
-    if (display == "ipad") {
-        document.getElementById("title2").innerText = title
-        fadeIn(document.getElementById("ipad-back"), 10);
-        fadeIn(document.getElementById("ipad-share"), 10);
-        nav[0].push(page)
-    } else {
-        openCardModal().finally(function () {
-            document.getElementById("title2").innerText = title
-            nav = document.querySelectorAll("#passageNav")
-            nav[0].push(page)
-        })
+    let shareButton = document.querySelector("#share-button")
+    let backButton = document.querySelector("#back-button")
+    switch (type) {
+        case "to":
+            if (display == "ipad") {
+                backButton.disabled="false"
+                document.getElementById("title2").innerText = title
+                fadeIn(document.getElementById("ipad-back"), 10);
+                if (share == true) {
+                    console.log("share true")
+                    shareButton.disabled="false"
+                    fadeIn(document.getElementById("ipad-share"), 10);
+                }
+                nav[0].push(page)
+            } else {
+                backButton.disabled="false"
+                document.getElementById("title2").innerText = title
+                fadeIn(document.getElementById("ipad-back"), 10);
+                if (share == true) {
+                    console.log("share true")
+                    shareButton.disabled="false"
+                    fadeIn(document.getElementById("ipad-share"), 10);
+                }
+                openCardModal().finally(function () {
+                    document.getElementById("title2").innerText = title
+                    nav = document.querySelectorAll("#passageNav")
+                    nav[0].push(page)
+                })
+            }
+            break;
+        case "backRoot":
+            gobackroot(page)
+            if (display == "ipad") {
+                backButton.disabled="true"
+                shareButton.disabled="true"
+                fadeOut(document.getElementById('ipad-share'), 10);
+                fadeOut(document.getElementById('ipad-back'), 10);
+            } else {
+                dismissModal();
+                backButton.disabled="true"
+                shareButton.disabled="true"
+                fadeOut(document.getElementById('ipad-share'), 10);
+                fadeOut(document.getElementById('ipad-back'), 10);
+            }
+            text = false;
+            document.getElementById('title2').innerText = '';
+            location.hash = '';
+            document.title = 'Qjasn\'s Blog'
+            break;
     }
-
 }
 
 //modal
@@ -400,14 +431,15 @@ async function alertReload(type, url) {
 
     await alert.present();
 }
-async function alertIonic(head,message,button) {
-    let headT=head;
-    let messageT=message;
-    let buttonT=button;
+
+async function alertIonic(head, message, button) {
+    let headT = head;
+    let messageT = message;
+    let buttonT = button;
     const alert = await alertController.create({
         header: headT,
         message: messageT,
-        buttons:buttonT,
+        buttons: buttonT,
         backdropDismiss: false
     });
 
@@ -443,10 +475,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 0.362) {
-        localStorage.update = 0.362;
+    if (localStorage.update == 0.363) {
+        localStorage.update = 0.363;
     } else {
-        localStorage.update = 0.362;
+        localStorage.update = 0.363;
         upadtealert()
     }
 }
@@ -473,7 +505,7 @@ async function upadtealert() {
 function showupdate() {
     p = getNav("nav-update")
     title = "更新日志"
-    toPage("passage-show")
+    Page("passage-show","to")
 
 }
 
@@ -492,8 +524,8 @@ function share(title, des) {
     nativeShare.setShareData(shareData)
     try {
         nativeShare.call()
-    }catch(err){
-        alertIonic("函数调用","该浏览器不支持调用分享函数，请复制该页面地址进行分享",[{text:'确定'}])
+    } catch (err) {
+        alertIonic("函数调用", "该浏览器不支持调用分享函数，请复制该页面地址进行分享", [{text: '确定'}])
     }
 }
 
@@ -516,7 +548,7 @@ function SharingCheck() {
                 })
                 break;
         }
-    }catch(err){
+    } catch (err) {
         console.log("NO Hash")
     }
 }

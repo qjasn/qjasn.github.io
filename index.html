@@ -216,7 +216,7 @@
     <ion-header>
         <ion-toolbar>
             <ion-buttons slot="start" id="modal-back"
-                         onclick="gobackroot('#passageNav');document.getElementById('title2').innerText='';text=false;dismissModal();location.hash='';document.title='Qjasn\' Blog'">
+                         onclick="Page('#passageNav','backRoot')">
                 <ion-text color="primary">完成</ion-text>
             </ion-buttons>
             <ion-buttons slot="end">
@@ -238,18 +238,21 @@
 <script id="nav-ipad" type="text/template">
     <ion-header>
         <ion-toolbar>
-                <ion-buttons slot="start" id="ipad-back" style="opacity:0"
-                             onclick="gobackroot('#passageNav');fadeOut(document.getElementById('ipad-share'), 10);fadeOut(document.getElementById('ipad-back'), 10);text=false;document.getElementById('title2').innerText='';location.hash='';document.title='Qjasn\'s Blog'">
+            <ion-buttons slot="start" id="ipad-back" style="opacity:0">
+                <ion-button id="back-button" disabled="true"
+                            onclick="Page('#passageNav','backRoot')">
                     <ion-text color="primary">
                         <ion-icon name="chevron-back-outline"></ion-icon>
                         返回
                     </ion-text>
-                </ion-buttons>
-                <ion-buttons slot="end" id="ipad-share" style="opacity:0">
-                    <ion-button onclick="share('document.title','document.title')">
-                        <ion-icon name="share-outline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
+                </ion-button>
+
+            </ion-buttons>
+            <ion-buttons slot="end" id="ipad-share" style="opacity:0">
+                <ion-button id="share-button" disabled="true" onclick="share('document.title','document.title')">
+                    <ion-icon name="share-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
             <ion-title>
                 <ion-text id="title2" class="ion-padding"></ion-text>
             </ion-title>
@@ -273,10 +276,10 @@
         </ion-text>
         <ion-text color="warning">更新内容:</ion-text>
         <ion-text color="success">
-            <h2 id="302021810">0.3.6b</h2>
+            <h2 id="302021810">0.3.6c</h2>
             <blockquote>
                 <ol>
-                    <li>分享功能完成</li>
+                    <li>修复已知问题</li>
                 </ol>
             </blockquote>
         </ion-text>
@@ -296,7 +299,7 @@
             </blockquote>
         </ion-text>
         <ion-button expand="block" slot="fixed"
-                    onclick="text=false;if(display=='iphone'){dismissModal()}else{gobackroot('#passageNav')}"
+                    onclick="Page('#passageNav','backRoot')"
                     style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用
         </ion-button>
     </ion-content>
