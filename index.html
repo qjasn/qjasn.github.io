@@ -87,7 +87,7 @@
                 <ion-icon name="hammer-outline"></ion-icon>
             </ion-tab-button>
             <ion-tab-button tab="set">
-                <ion-label>设置</ion-label>
+                <ion-label>调整与其他</ion-label>
                 <ion-icon name="cog-outline"></ion-icon>
             </ion-tab-button>
         </ion-tab-bar>
@@ -96,7 +96,7 @@
 <script id="nav-set" type="text/template">
     <ion-header>
         <ion-toolbar>
-            <ion-title>偏好设置</ion-title>
+            <ion-title>调整与其它</ion-title>
             <ion-progress-bar id="progress" style="opacity:0"></ion-progress-bar>
         </ion-toolbar>
     </ion-header>
@@ -159,7 +159,13 @@
                 <ion-item lines="full">除过ionic以外，本网站其他全部为原生JS
                     <ion-icon slot="end" name="logo-javascript"></ion-icon>
                 </ion-item>
-                <ion-item lines="full">支持：
+                <ion-item lines="full">
+                    本站使用WebStorm（电脑开发）与CodeSandBox（iPad端开发）编写
+                </ion-item>
+                <ion-item lines="full">
+                    支持的浏览器:
+                </ion-item>
+                <ion-item lines="full">
                     <ion-icon name="logo-chrome"></ion-icon>
                     Chromium 60+
                     <ion-icon name="logo-firefox"></ion-icon>
@@ -171,8 +177,25 @@
                     <ion-icon name="logo-edge"></ion-icon>
                     Edge 60+
                 </ion-item>
+            <ion-list>
+                <ion-list-header>鸣谢</ion-list-header>
                 <ion-item lines="full">
-                    感谢某位同学，没有她，这个网站将不会再次更新
+                    我的父母，他们给了我编程所需要的环境
+                </ion-item>
+                <ion-item lines="full">
+                    我的表哥，他在编程路上指引我了方向
+                </ion-item>
+                <ion-item lines="full">
+                    我的其他家人，他们的大力支持给了我鼓励
+                </ion-item>
+                <ion-item lines="full">
+                    我的两位友人——姚与赵两位，他们给了我莫大的帮助
+                </ion-item>
+                <ion-item lines="full">
+                    我曾经的知音——耿，她让我拾起于我而言满是尘土的编程
+                </ion-item>
+                <ion-item lines="full">
+                    开源社区的大家
                 </ion-item>
             </ion-list>
             <ion-item button lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
@@ -192,6 +215,7 @@
         <ion-item color="success">
             <ion-label>该网站仍处于Alpha测试阶段，<br>遇到问题请在github上提issus</ion-label>
         </ion-item>
+        <ion-item><ion-lable>沉痛哀悼江主席去世</ion-lable></ion-item>
         <div id="list"></div>
     </ion-content>
 </script>
