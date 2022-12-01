@@ -2,8 +2,18 @@
  * Dark Colors
  * -------------------------------------------
  */
+
 :root{
     color-scheme: dark light;
+}
+
+html{
+filter: grayscale (100%);
+-webkit-filter: grayscale(100%) ;
+-moz-filter: grayscale (100%);
+-ms-filter: grayscale (100%) ;
+-o-filter: grayscale (100%);
+filter: progid: DXImageTransform. Microsoft. BasicImage (grayscale=1);
 }
 body.dark {
     --ion-color-primary: #428cff;
