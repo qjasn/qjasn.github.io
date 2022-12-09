@@ -179,9 +179,9 @@ startSet = function () {
     })
 
 }
-startMore = function(){
+startMore = function () {
     const pageRoot = document.querySelector('#ionSegment')
-    pageRoot.addEventListener('ionChange',()=>{
+    pageRoot.addEventListener('ionChange', () => {
         const pageName = document.querySelector('#nav-more-page')
         pageName.setRoot(pageRoot.value)
     })
@@ -236,7 +236,7 @@ function passageShow() {
 
             })
             SharingCheck();
-            document.getElementById("list").innerHTML += "<div style='text-align: center'><ion-text color='medium'><sub>主页最多显示5个文章，其余请在更多页面中查看</sub></ion-text></div>"
+            document.getElementById("list").innerHTML += "<div style='text-align: center'><ion-text color='medium'><sub>主页最多除过置顶显示5个文章，其余请在更多页面中查看</sub></ion-text></div>"
         }
     }
 }
@@ -545,9 +545,6 @@ function showupdate() {
 }
 
 //share
-/*
-old
-*/
 var nativeShare = new NativeShare()
 
 function share(title, des) {
@@ -564,13 +561,10 @@ function share(title, des) {
     }
 }
 
-
-// new
 function SharingCheck() {
     let Hash = location.hash
     try {
         Hash = Hash.split("#")[1];
-        console.log(Hash)
         let type = Hash.split(",")[0];
         switch (type) {
             case "passage":
@@ -584,6 +578,52 @@ function SharingCheck() {
                 break;
         }
     } catch (err) {
-        console.log("NO Hash")
+        console.log("Not from sharing")
     }
+}
+
+//passage achieve
+function PassageAchieve() {
+    let year = [];
+    let month = [];
+    let day = [];
+    let i = 0;
+    passageJson.passage.forEach(function (item) {
+        item.time.split(",").forEach(function (item) {
+            year[i] = item.split(".")[0]
+            ///////////////
+            i++;
+        })
+    })
+    let YearInnerHTML = ""
+    year.forEach(function (item) {
+        YearInnerHTML = YearInnerHTML + `<ion-select-option value="` + item + `">` + item + `</ion-select-option>`
+    })
+    document.getElementById("DateYearSelect").innerHTML = YearInnerHTML
+}
+
+function PassageFind(year, month, day) {
+    passageJson.passage.forEach(function (item) {
+        item.time.split(",").forEach(function (itemT) {
+            if (itemT.split(".")[0] == year && itemT.split(".")[1] == month && itemT.split(".")[2] == day) {
+                passageListSelect =
+                    `<ion-card>
+					<ion-card-header>
+						<ion-sub-title>` +
+                    item.time + `  作者：` + item.author +
+                    `</ion-sub-title>` +
+                    `<ion-card-title>` +
+                    item.passageName +
+                    `</ion-card-title>` +
+                    `</ion-card-header>` +
+                    `<ion-card-content>` +
+                    item.des +
+                    `</ion-card-content>` +
+                    `<ion-button onclick="passageGet('` + item.passagePath + `','` + item
+                        .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
+                    item.des + `',)" fill="clear">阅读</ion-button>`
+                console.log(passageListSelect)
+            }
+        })
+    })
 }

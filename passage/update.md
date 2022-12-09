@@ -68,3 +68,7 @@
 >1. 对于文章加载做出调整，现在可以反映文章加载进度
 ## 0.3.x-Small Changes
 >1. 调整部分文字
+## 0.3.7a(2022.12.9)
+>1. 文章归档功能开始建设
+>2. 新增两个函数PassageFind(usage:year,month,day)与PassageAchieve
+>3. 页面开始完善

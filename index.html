@@ -177,30 +177,31 @@
                     <ion-icon name="logo-edge"></ion-icon>
                     Edge 60+
                 </ion-item>
-            <ion-list>
-                <ion-list-header>鸣谢</ion-list-header>
-                <ion-item lines="full">
-                    我的父母，他们给了我编程所需要的环境
-                </ion-item>
-                <ion-item lines="full">
-                    我的表哥，他在编程路上指引我了方向
-                </ion-item>
-                <ion-item lines="full">
-                    我的其他家人，他们的大力支持给了我鼓励
-                </ion-item>
-                <ion-item lines="full">
-                    我的两位友人——姚与赵两位，他们给了我莫大的帮助
-                </ion-item>
-                <ion-item lines="full">
-                    我曾经的知音——耿，她让我拾起于我而言满是尘土的编程
-                </ion-item>
-                <ion-item lines="full">
-                    开源社区的大家
+                <ion-list>
+                    <ion-list-header>鸣谢</ion-list-header>
+                    <ion-item lines="full">
+                        我的父母，他们给了我编程所需要的环境
+                    </ion-item>
+                    <ion-item lines="full">
+                        我的表哥，他在编程路上指引我了方向
+                    </ion-item>
+                    <ion-item lines="full">
+                        我的其他家人，他们的大力支持给了我鼓励
+                    </ion-item>
+                    <ion-item lines="full">
+                        我的两位友人——姚与赵两位，他们给了我莫大的帮助
+                    </ion-item>
+                    <ion-item lines="full">
+                        我曾经的知音——耿，她让我拾起于我而言满是尘土的编程
+                    </ion-item>
+                    <ion-item lines="full">
+                        开源社区的大家
+                    </ion-item>
+                </ion-list>
+                <ion-item button lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
+                    <ion-label>更新日志</ion-label>
                 </ion-item>
             </ion-list>
-            <ion-item button lines="full" onclick="passageGet('update','更新日志','none','nothing','更新相关',10000000)">
-                <ion-label>更新日志</ion-label>
-            </ion-item>
         </ion-list>
     </ion-content>
 </script>
@@ -220,7 +221,40 @@
 </script>
 <script id="nav-more-archive" type="text/template">
     <ion-content>
-        <ion-text>正在测试中(nav-more-archive)</ion-text>
+        <ion-list>
+            <ion-list-header>日期分类</ion-list-header>
+            <ion-gird>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label>年</ion-label>
+                            <ion-select id="DateYearSelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label>月</ion-label>
+                            <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                                <ion-select-option value=""></ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label>日</ion-label>
+                            <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                                <ion-select-option value=""></ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-gird>
+        </ion-list>
+        <ion-list>
+            <ion-list-header>名称分类</ion-list-header>
+            <div class="NameSelect"></div>
+        </ion-list>
     </ion-content>
 </script>
 <script id="nav-more-talking" type="text/template">
