@@ -94,6 +94,9 @@ customElements.define(
     class NavMoreArchive extends HTMLElement {
         connectedCallback() {
             this.innerHTML = getNav("nav-more-archive")
+            PassageAchieveDate();
+            console.log("nav-more")
+
         }
     }
 )
@@ -181,14 +184,19 @@ startSet = function () {
 }
 startMore = function () {
     const pageRoot = document.querySelector('#ionSegment')
+    console.log("start more")
+    const pageName = document.querySelector('#nav-more-page')
+    pageName.setRoot(pageRoot.value)
     pageRoot.addEventListener('ionChange', () => {
         const pageName = document.querySelector('#nav-more-page')
         pageName.setRoot(pageRoot.value)
+        console.log(pageRoot.value)
     })
 }
 //Get passage
-var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest();
+var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest(), httpGETfunction = new XMLHttpRequest()
 var passageJson, passageList = "";
+
 
 function passageShow() {
 
@@ -197,7 +205,6 @@ function passageShow() {
     httpget.onreadystatechange = function () {
 
         if (httpget.readyState == 4 && httpget.status == 200) {
-            passageJson = JSON.parse(httpget.responseText)
             let json = JSON.parse(httpget.responseText);
             json.passage.forEach(function (item, i) {
                 passageList = passageList +
@@ -600,63 +607,111 @@ function SharingCheck() {
 //passage achieve
 var DATETEST
 
+function PassageAchieveDate() {
+    httpGETfunction.open('GET', 'passage/passage-list.json', true);
+    httpGETfunction.send();
+    httpGETfunction.onreadystatechange = function () {
+        if (httpGETfunction.readyState == 4 && httpGETfunction.status == 200) {
+            passageJson = JSON.parse(httpGETfunction.responseText)
+            let date = [];
+            let i = 0;
+            let temp = [];
+            passageJson.passage.forEach((item) => {
+                item.time.split(",").forEach((item) => {
+                    date[i] = item.split(".")[0]
+                    i++;
+                })
+            })
+            date = repeat(date)
+            date.sort()
+            date.forEach((item) => {
+                temp.push({"year": item - 0, "month": []})
+            })
+            date = temp;
+            i = 0
+            passageJson.passage.forEach((item) => {
+                item.time.split(",").forEach((item) => {
+                    date.forEach((itemD, indexD) => {
+                        if (itemD.year == item.split(".")[0]) {
+                            temp[indexD].month.push(item.split(".")[1] - 0)
+                        }
+                        i++
+                    })
+                })
+            })
+            temp.forEach((item, index) => {
+                temp[index].month = repeat(temp[index].month)
+                temp[index].month.sort()
+                temp[index].month = {"month": item.month - 0, "day": []}
+            })
+            date = temp
+            passageJson.passage.forEach((item) => {
+                item.time.split(",").forEach((item) => {
+                    date.forEach((itemD, indexD) => {
+                        if (item.split(".")[1] == itemD.month.month) {
+                            temp[indexD].month.day.push(item.split(".")[2] - 0)
+                        }
+                        temp[indexD].month.day = repeat(temp[indexD].month.day);
+                        temp[indexD].month.day.sort()
+                    })
+                })
+            })
+            date = temp
+            DATETEST = date
+            PassageAchieve();
+        }
+    }
+}
+
 function PassageAchieve() {
-    let date = [];
-    let i = 0;
-    let temp = [];
-    passageJson.passage.forEach((item) => {
-        item.time.split(",").forEach((item) => {
-            date[i] = item.split(".")[0]
-            i++;
+    let yearSelect = document.querySelector("#DateYearSelect");
+    let monthSelect = document.querySelector("#DateMonthSelect")
+    let daySelect = document.querySelector("#DateDaySelect")
+    PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
+    let YearInnerHTML = "", MonthInnerHTML = "", DayInnerHTML = ""
+    DATETEST.forEach((item) => {
+        YearInnerHTML = YearInnerHTML + `<ion-select-option value="` + item.year + `">` + item.year + `</ion-select-option>`
+    })
+    yearSelect.innerHTML = YearInnerHTML
+    yearSelect.addEventListener('ionChange', (e) => {
+        MonthInnerHTML = "";
+        DayInnerHTML = ""
+        monthSelect.value = undefined;
+        daySelect.value = undefined
+        monthSelect.innerHTML = MonthInnerHTML
+        daySelect.innerHTML=DayInnerHTML
+        PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
+        DATETEST.forEach((itemY) => {
+            if (itemY.year == yearSelect.value) {
+                MonthInnerHTML = MonthInnerHTML + `<ion-select-option value="` + itemY.month.month + `">` + itemY.month.month + `</ion-select-option>`
+            }
         })
+        monthSelect.innerHTML = MonthInnerHTML
     })
-    date = repeat(date)
-    date.sort()
-    date.forEach((item) => {
-        temp.push({"year": item - 0, "month": []})
-    })
-    date = temp;
-    i = 0
-    passageJson.passage.forEach((item) => {
-        item.time.split(",").forEach((item) => {
-            date.forEach((itemD, indexD) => {
-                if (itemD.year == item.split(".")[0]) {
-                    temp[indexD].month.push(item.split(".")[1] - 0)
+    monthSelect.addEventListener('ionChange', (e) => {
+        DayInnerHTML = ""
+        daySelect.value = undefined
+        daySelect.innerHTML=DayInnerHTML
+        PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
+        DATETEST.forEach((item)=>{
+            if(item.year == yearSelect.value){
+                if(item.month.month== monthSelect.value){
+                    item.month.day.forEach((i)=>{
+                        DayInnerHTML = DayInnerHTML +  `<ion-select-option value="` + i + `">` + i + `</ion-select-option>`
+                    })
                 }
-                i++
-            })
+            }
         })
+        daySelect.innerHTML=DayInnerHTML;
     })
-    temp.forEach((item, index) => {
-        temp[index].month = repeat(temp[index].month)
-        temp[index].month.sort()
-        temp[index].month = {"month": item.month - 0, "day": []}
+    daySelect.addEventListener('ionChange',()=>{
+        PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
     })
-    date = temp
-    passageJson.passage.forEach((item) => {
-        item.time.split(",").forEach((item) => {
-            date.forEach((itemD, indexD) => {
-                if (item.split(".")[1] == itemD.month.month) {
-                    temp[indexD].month.day.push(item.split(".")[2] - 0)
-                }
-                temp[indexD].month.day = repeat(temp[indexD].month.day);
-                temp[indexD].month.day.sort()
-            })
-        })
-    })
-    date = temp
-    DATETEST = date
-    /*
-    let YearInnerHTML = ""
-    year.forEach(function (item) {
-        YearInnerHTML = YearInnerHTML + `<ion-select-option value="` + item + `">` + item + `</ion-select-option>`
-    })
-    document.getElementById("DateYearSelect").innerHTML = YearInnerHTML
-     */
 }
 
 function PassageFind(year, month, day) {
-    let test;
+    let test = false;
+    let passageListSelect = "";
     passageJson.passage.forEach(function (item) {
         item.time.split(",").forEach(function (itemT) {
             if (itemT.split(".")[0] == year) {
@@ -669,26 +724,30 @@ function PassageFind(year, month, day) {
                         test = true
                     }
                 }
-            }
-            if (test == true) {
-                passageListSelect =
-                    `<ion-card>
-					<ion-card-header>
-						<ion-sub-title>` +
-                    item.time + `  作者：` + item.author +
-                    `</ion-sub-title>` +
-                    `<ion-card-title>` +
-                    item.passageName +
-                    `</ion-card-title>` +
-                    `</ion-card-header>` +
-                    `<ion-card-content>` +
-                    item.des +
-                    `</ion-card-content>` +
-                    `<ion-button onclick="passageGet('` + item.passagePath + `','` + item
-                        .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
-                    item.des + `',)" fill="clear">阅读</ion-button>`
-                console.log(passageListSelect)
+            } else if (year == undefined) {
+                test = true
             }
         })
+        if (test == true) {
+            passageListSelect = passageListSelect +
+                `<ion-card>
+					<ion-card-header>
+						<ion-sub-title>` +
+                item.time + `  作者：` + item.author +
+                `</ion-sub-title>` +
+                `<ion-card-title>` +
+                item.passageName +
+                `</ion-card-title>` +
+                `</ion-card-header>` +
+                `<ion-card-content>` +
+                item.des +
+                `</ion-card-content>` +
+                `<ion-button onclick="passageGet('` + item.passagePath + `','` + item
+                    .passageName + `','` + item.musicPath + `','` + item.musicName + `','` +
+                item.des + `',)" fill="clear">阅读</ion-button></ion-card>`
+            test = false
+        }
     })
+    document.getElementById("passage-achieve").innerHTML = passageListSelect
+
 }

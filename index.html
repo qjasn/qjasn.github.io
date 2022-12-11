@@ -235,22 +235,21 @@
                     <ion-col>
                         <ion-item>
                             <ion-label>月</ion-label>
-                            <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
-                                <ion-select-option value=""></ion-select-option>
+                            <ion-select id="DateMonthSelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
                             </ion-select>
                         </ion-item>
                     </ion-col>
                     <ion-col>
                         <ion-item>
                             <ion-label>日</ion-label>
-                            <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
-                                <ion-select-option value=""></ion-select-option>
+                            <ion-select id="DateDaySelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
                             </ion-select>
                         </ion-item>
                     </ion-col>
                 </ion-row>
             </ion-gird>
         </ion-list>
+        <div id="passage-achieve"></div>
     </ion-content>
 </script>
 <script id="nav-more-talking" type="text/template">
@@ -272,7 +271,7 @@
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <ion-nav root="nav-more-archive" id="nav-more-page"></ion-nav>
+        <ion-nav id="nav-more-page"></ion-nav>
     </ion-content>
 </script>
 <script id="nav-tools" type="text/template">
