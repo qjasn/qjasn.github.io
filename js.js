@@ -393,6 +393,21 @@ function dismissModal() {
 
 //Function
 //JavaScript
+
+function repeat(arr) {
+    var temp = [];//建立一个新数组保存删除后的数组
+    //遍历数组
+    for (var i = 0; i < arr.length; i++) {
+
+        if (temp.indexOf(arr[i]) == -1) {
+
+            temp.push(arr[i])
+        }
+    }
+    return temp;
+
+}
+
 function fadeIn(element, speed) {
     if (element.style.opacity != 1) {
         var speed = speed || 30;
@@ -583,29 +598,79 @@ function SharingCheck() {
 }
 
 //passage achieve
+var DATETEST
+
 function PassageAchieve() {
-    let year = [];
-    let month = [];
-    let day = [];
+    let date = [];
     let i = 0;
-    passageJson.passage.forEach(function (item) {
-        item.time.split(",").forEach(function (item) {
-            year[i] = item.split(".")[0]
-            ///////////////
+    let temp = [];
+    passageJson.passage.forEach((item) => {
+        item.time.split(",").forEach((item) => {
+            date[i] = item.split(".")[0]
             i++;
         })
     })
+    date = repeat(date)
+    date.sort()
+    date.forEach((item) => {
+        temp.push({"year": item - 0, "month": []})
+    })
+    date = temp;
+    i = 0
+    passageJson.passage.forEach((item) => {
+        item.time.split(",").forEach((item) => {
+            date.forEach((itemD, indexD) => {
+                if (itemD.year == item.split(".")[0]) {
+                    temp[indexD].month.push(item.split(".")[1] - 0)
+                }
+                i++
+            })
+        })
+    })
+    temp.forEach((item, index) => {
+        temp[index].month = repeat(temp[index].month)
+        temp[index].month.sort()
+        temp[index].month = {"month": item.month - 0, "day": []}
+    })
+    date = temp
+    passageJson.passage.forEach((item) => {
+        item.time.split(",").forEach((item) => {
+            date.forEach((itemD, indexD) => {
+                if (item.split(".")[1] == itemD.month.month) {
+                    temp[indexD].month.day.push(item.split(".")[2] - 0)
+                }
+                temp[indexD].month.day = repeat(temp[indexD].month.day);
+                temp[indexD].month.day.sort()
+            })
+        })
+    })
+    date = temp
+    DATETEST = date
+    /*
     let YearInnerHTML = ""
     year.forEach(function (item) {
         YearInnerHTML = YearInnerHTML + `<ion-select-option value="` + item + `">` + item + `</ion-select-option>`
     })
     document.getElementById("DateYearSelect").innerHTML = YearInnerHTML
+     */
 }
 
 function PassageFind(year, month, day) {
+    let test;
     passageJson.passage.forEach(function (item) {
         item.time.split(",").forEach(function (itemT) {
-            if (itemT.split(".")[0] == year && itemT.split(".")[1] == month && itemT.split(".")[2] == day) {
+            if (itemT.split(".")[0] == year) {
+                if (month == undefined) {
+                    test = true
+                } else if (itemT.split(".")[1] == month) {
+                    if (day == undefined) {
+                        test = true
+                    } else if (itemT.split(".")[2] == day) {
+                        test = true
+                    }
+                }
+            }
+            if (test == true) {
                 passageListSelect =
                     `<ion-card>
 					<ion-card-header>
