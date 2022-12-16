@@ -214,7 +214,7 @@
     </ion-header>
     <ion-content>
         <ion-item color="success">
-            <ion-label>该网站仍处于Alpha测试阶段，<br>遇到问题请在github上提issus</ion-label>
+            <ion-label>该网站处于Beta测试阶段，<br>遇到问题请在github上提issus</ion-label>
         </ion-item>
         <div id="list"></div>
     </ion-content>
@@ -228,21 +228,24 @@
                     <ion-col>
                         <ion-item>
                             <ion-label>年</ion-label>
-                            <ion-select id="DateYearSelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                            <ion-select id="DateYearSelect" [interfaceOptions]="customPopoverOptions"
+                                        interface="popover" placeholder="">
                             </ion-select>
                         </ion-item>
                     </ion-col>
                     <ion-col>
                         <ion-item>
                             <ion-label>月</ion-label>
-                            <ion-select id="DateMonthSelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                            <ion-select id="DateMonthSelect" [interfaceOptions]="customPopoverOptions"
+                                        interface="popover" placeholder="">
                             </ion-select>
                         </ion-item>
                     </ion-col>
                     <ion-col>
                         <ion-item>
                             <ion-label>日</ion-label>
-                            <ion-select id="DateDaySelect" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="">
+                            <ion-select id="DateDaySelect" [interfaceOptions]="customPopoverOptions" interface="popover"
+                                        placeholder="">
                             </ion-select>
                         </ion-item>
                     </ion-col>
@@ -344,38 +347,42 @@
 </script>
 <script id="nav-update" type="text/template">
 
-    <ion-content fullscreen class="ion-padding">
+    <ion-content fullscreen class="ion-padding" class="markdown">
 
         <ion-text>
 
         </ion-text>
-        <ion-text color="warning">更新内容:</ion-text>
+        <div class="markdown">
+            <ion-text color="">更新内容:</ion-text>
+            <h2 id="beta03-version">Beta0.3 Version</h2>
+            <h3 id="beta03版本发布">Beta0.3版本发布</h3>
+            <ul>
+                <li><p>Future:</p>
+                    <ul>
+                        <li>文章的分享功能</li>
+                        <li>动态的文章获取功能</li>
+                        <li>文章动态归档功能</li>
+                        <li>文章的即修即改功能</li>
+                        <li>很高的扩展性</li>
+                    </ul>
+                </li>
+                <li><p>不足：</p>
+                    <ul>
+                        <li>没有评论功能</li>
+                        <li>部分页面还未完善</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="欢迎各位在github上提出issus，感激不尽">欢迎各位在GitHub上提出issus，感激不尽</h4>
+            <br/>
+            <br/>
+        </div>
+        <ion-text color="danger"></ion-text>
         <ion-text color="success">
-            <h2 id="302021810">0.3.6d</h2>
-            <blockquote>
-                <ol>
-                    <li>对于文章的加载做出调整，现在已有加载进度提示</li>
-                </ol>
-            </blockquote>
-        </ion-text>
-        <ion-text color="danger">已知问题：</ion-text>
-        <ion-text color="success">
-        </ion-text>
-        <ion-text color="danger">期望目标：</ion-text>
-        <ion-text color="success">
-            <blockquote>
-                <ol>
-                    <li>文章统一归档</li>
-                    <li>文章自动按照时间排序</li>
-                    <li>文章与文章内搜索搜索</li>
-                    <li>想到其他的什么再写吧...</li>
-
-                </ol>
-            </blockquote>
         </ion-text>
         <ion-button expand="block" slot="fixed"
                     onclick="Page('#passageNav','backRoot')"
-                    style="padding:9px;width: 100%;bottom: 5px;height:60px">开始使用
+                    style="padding:9px;width: 100%;bottom: 5px;height:60px">开始浏览
         </ion-button>
     </ion-content>
 

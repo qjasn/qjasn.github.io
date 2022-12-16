@@ -95,7 +95,6 @@ customElements.define(
         connectedCallback() {
             this.innerHTML = getNav("nav-more-archive")
             PassageAchieveDate();
-            console.log("nav-more")
 
         }
     }
@@ -137,6 +136,8 @@ start = function () {
     checkupdate()
     //CDN warns
     warnCDN()
+    //Share Check
+    SharingCheck();
 
 }
 
@@ -184,13 +185,11 @@ startSet = function () {
 }
 startMore = function () {
     const pageRoot = document.querySelector('#ionSegment')
-    console.log("start more")
     const pageName = document.querySelector('#nav-more-page')
     pageName.setRoot(pageRoot.value)
     pageRoot.addEventListener('ionChange', () => {
         const pageName = document.querySelector('#nav-more-page')
         pageName.setRoot(pageRoot.value)
-        console.log(pageRoot.value)
     })
 }
 //Get passage
@@ -242,7 +241,6 @@ function passageShow() {
 
 
             })
-            SharingCheck();
             document.getElementById("list").innerHTML += "<div style='text-align: center'><ion-text color='medium'><sub>主页最多除过置顶显示5个文章，其余请在更多页面中查看</sub></ion-text></div>"
         }
     }
@@ -402,12 +400,10 @@ function dismissModal() {
 //JavaScript
 
 function repeat(arr) {
-    var temp = [];//建立一个新数组保存删除后的数组
-    //遍历数组
-    for (var i = 0; i < arr.length; i++) {
+    let temp = []
+    for (let i = 0; i < arr.length; i++) {
 
         if (temp.indexOf(arr[i]) == -1) {
-
             temp.push(arr[i])
         }
     }
@@ -530,10 +526,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 0.364) {
-        localStorage.update = 0.364;
+    if (localStorage.update == 0.3) {
+        localStorage.update = 0.3;
     } else {
-        localStorage.update = 0.364;
+        localStorage.update = 0.3;
         toastAlert('dark', 2000,
             '<ion-text>网站已更新</ion-text>', true, 'top', [
                 {
@@ -616,6 +612,7 @@ function PassageAchieveDate() {
             let date = [];
             let i = 0;
             let temp = [];
+            let temp2;
             passageJson.passage.forEach((item) => {
                 item.time.split(",").forEach((item) => {
                     date[i] = item.split(".")[0]
@@ -640,25 +637,31 @@ function PassageAchieveDate() {
                 })
             })
             temp.forEach((item, index) => {
+                temp2 = item;
                 temp[index].month = repeat(temp[index].month)
                 temp[index].month.sort()
-                temp[index].month = {"month": item.month - 0, "day": []}
+                temp[index].month.forEach((item1, index1) => {
+                    temp[index].month[index1] = {"month": item1, "day": []}
+                })
             })
             date = temp
             passageJson.passage.forEach((item) => {
                 item.time.split(",").forEach((item) => {
                     date.forEach((itemD, indexD) => {
-                        if (item.split(".")[1] == itemD.month.month) {
-                            temp[indexD].month.day.push(item.split(".")[2] - 0)
-                        }
-                        temp[indexD].month.day = repeat(temp[indexD].month.day);
-                        temp[indexD].month.day.sort()
+                        itemD.month.forEach((item1, index1) => {
+                            if (item.split(".")[1] == item1.month) {
+                                temp[indexD].month[index1].day.push(item.split(".")[2] - 0)
+                            }
+                            temp[indexD].month[index1].day = repeat(temp[indexD].month[index1].day);
+                            temp[indexD].month[index1].day.sort()
+                        })
                     })
                 })
             })
             date = temp
             DATETEST = date
             PassageAchieve();
+            SharingCheck();
         }
     }
 }
@@ -679,11 +682,13 @@ function PassageAchieve() {
         monthSelect.value = undefined;
         daySelect.value = undefined
         monthSelect.innerHTML = MonthInnerHTML
-        daySelect.innerHTML=DayInnerHTML
+        daySelect.innerHTML = DayInnerHTML
         PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
         DATETEST.forEach((itemY) => {
             if (itemY.year == yearSelect.value) {
-                MonthInnerHTML = MonthInnerHTML + `<ion-select-option value="` + itemY.month.month + `">` + itemY.month.month + `</ion-select-option>`
+                itemY.month.forEach((itemM) => {
+                    MonthInnerHTML = MonthInnerHTML + `<ion-select-option value="` + itemM.month + `">` + itemM.month + `</ion-select-option>`
+                })
             }
         })
         monthSelect.innerHTML = MonthInnerHTML
@@ -691,20 +696,22 @@ function PassageAchieve() {
     monthSelect.addEventListener('ionChange', (e) => {
         DayInnerHTML = ""
         daySelect.value = undefined
-        daySelect.innerHTML=DayInnerHTML
+        daySelect.innerHTML = DayInnerHTML
         PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
-        DATETEST.forEach((item)=>{
-            if(item.year == yearSelect.value){
-                if(item.month.month== monthSelect.value){
-                    item.month.day.forEach((i)=>{
-                        DayInnerHTML = DayInnerHTML +  `<ion-select-option value="` + i + `">` + i + `</ion-select-option>`
-                    })
-                }
+        DATETEST.forEach((item) => {
+            if (item.year == yearSelect.value) {
+                item.month.forEach((itemM) => {
+                    if (itemM.month == monthSelect.value) {
+                        itemM.day.forEach((i) => {
+                            DayInnerHTML = DayInnerHTML + `<ion-select-option value="` + i + `">` + i + `</ion-select-option>`
+                        })
+                    }
+                })
             }
         })
-        daySelect.innerHTML=DayInnerHTML;
+        daySelect.innerHTML = DayInnerHTML;
     })
-    daySelect.addEventListener('ionChange',()=>{
+    daySelect.addEventListener('ionChange', () => {
         PassageFind(yearSelect.value, monthSelect.value, daySelect.value)
     })
 }
