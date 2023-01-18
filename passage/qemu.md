@@ -1,13 +1,13 @@
 # 如何在m1 Mac上使用qemu  
 #### 附：utm在m1 Mac上的使用教程  
 
-> 注意！
-> 本文章发布过于久远
-> 不具有时效性
-> 请仔细甄别
-> 你已经被警告
-> 请勿直接使用本文所给出的方法
-> 导致问题概不负责
+> 注意！<br>
+> 本文章发布过于久远<br>
+> 不具有时效性<br>
+> 请仔细甄别<br>
+> 你已经被警告<br>
+> 请勿直接使用本文所给出的方法<br>
+> 导致问题概不负责<br>
 
 ## 第一部分：qemu教程  
 参考<a target="_blank" href="https://forums.macrumors.com/threads/success-virtualize-windows-10-for-arm-on-m1-with-alexander-grafs-qemu-hypervisor-patch.2272354/">文献</a>  
