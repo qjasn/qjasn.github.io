@@ -69,6 +69,11 @@ customElements.define(
     class PassageShow extends HTMLElement {
         connectedCallback() {
             this.innerHTML = p
+            try {
+                gitalk[gitalkname].render("gitalk");
+            } catch (err) {
+                console.log("无评论选项")
+            }
         }
     }
 )
@@ -195,7 +200,7 @@ startMore = function () {
 //Get passage
 var httpRequest = new XMLHttpRequest(), httpget = new XMLHttpRequest(), httpGETfunction = new XMLHttpRequest()
 var passageJson, passageList = "";
-
+var gitalk = {};
 
 function passageShow() {
 
@@ -226,18 +231,16 @@ function passageShow() {
                 if (i < 6) {
                     document.getElementById("list").innerHTML = passageList
                 }
-                /*
-                gitalk[i] = new Gitalk({
-                     clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
-                     clientSecret: '9f8aee11a77f8bdcaaa4c5e496902af7c6ec118d', // GitHub Application Client Secret
-                     repo: 'qjasn.github.io', // 存放评论的仓库
-                     owner: 'qjasn', // 仓库的创建者，
-                     admin: ['qjasn'], // 如果仓库有多个人可以操作，那么在这里以数组形式写出
-                     id: item.passageName, // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
 
-                 })
-
-                 */
+                gitalk[item.passagePath] = new Gitalk({
+                    clientID: '0cb54c18847c58ac11d2', // GitHub Application Client ID
+                    clientSecret: '8411f9c8490d471a1b016adfbcfaae53677b28a1', // GitHub Application Client Secret
+                    repo: 'qjasn.github.io', // 存放评论的仓库
+                    owner: 'qjasn', // 仓库的创建者，
+                    admin: ['qjasn'], // 如果仓库有多个人可以操作，那么在这里以数组形式写出
+                    id: item.passagePath, // 用于标记评论是哪个页面的，确保唯一，并且长度小于50
+                    title: item.passageName
+                })
 
 
             })
@@ -246,7 +249,7 @@ function passageShow() {
     }
 }
 
-var p, passagen, describe, number, title, text;
+var p, passagen, describe, gitalkname, title, text;
 var fzfp = `
 <h3>404 not found</h3>
 `
@@ -257,6 +260,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
     passagen = passagename
     describe = des;
     window.location.hash = "#passage," + passage
+    gitalkname = passage
     text = "true"
     toastAlert("dark", 600, "<ion-text>正在加载，请耐心等待</ion-text>", true, 'bottom', '')
     httpRequest.open('GET', 'passage/' + passage + '.md', true); //get passage
@@ -273,7 +277,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
             if (httpRequest.status == 404) {
                 p = "<ion-content class=\"ion-padding\"><div  class=\"ion-padding\">" + marked(fzfp) + "</div></ion-content>"
             } else {
-                p = "<ion-content class='markdown'>" + marked(httpRequest.responseText) + `<div id="valine_`+passage+`"></div></ion-content>"`
+                p = "<ion-content class='markdown'>" + marked(httpRequest.responseText) + `<div id='gitalk'></div></ion-content>`
                 if (music !== "none") {
                     p = `
                     <ion-content class="markdown">
@@ -288,8 +292,9 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 								</audio>
 							</ion-card-content>
 						</ion-card>` +
-                        p + `</div><div id="valine_`+passage+`"></div></ion-content>`
+                        p + `</div><div id='gitalk'></div></ion-content>`
                 }
+
                 number = num
                 Page('passage-show', "to", true)
                 fadeOut(document.getElementById("progress"))
@@ -526,10 +531,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == 0.3) {
-        localStorage.update = 0.3;
+    if (localStorage.update == "038a") {
+        localStorage.update = "038a";
     } else {
-        localStorage.update = 0.3;
+        localStorage.update = "038a";
         toastAlert('dark', 2000,
             '<ion-text>网站已更新</ion-text>', true, 'top', [
                 {

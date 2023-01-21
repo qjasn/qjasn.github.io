@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
     <!--share-->
     <script src="./NativeShare.js"></script>
-    <!--Valine-->
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <!--gitalk-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="talk.js"></script>
     <!--end import-->
     <!--window.ionic-->
     <script type="module">
@@ -212,6 +214,7 @@
         </ion-toolbar>
     </ion-header>
     <ion-content>
+        <ion-item color="danger">祝各位新年快乐!</ion-item>
         <ion-item color="success">
             <ion-label>该网站处于Beta测试阶段，<br>遇到问题请在github上提issus</ion-label>
         </ion-item>
@@ -297,7 +300,7 @@
                 <ion-text color="primary">完成</ion-text>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button onclick="share('document.title','document.title')">
+                <ion-button onclick="share(document.title,document.title)">
                     <ion-icon name="share-outline"></ion-icon>
                 </ion-button>
             </ion-buttons>
@@ -352,26 +355,9 @@
 
         </ion-text>
         <div class="markdown">
-            <ion-text color="">更新内容:</ion-text>
-            <h2 id="beta03-version">Beta0.3 Version</h2>
-            <h3 id="beta03版本发布">Beta0.3版本发布</h3>
-            <ul>
-                <li><p>Feature:</p>
-                    <ul>
-                        <li>文章的分享功能</li>
-                        <li>动态的文章获取功能</li>
-                        <li>文章动态归档功能</li>
-                        <li>文章的即修即改功能</li>
-                        <li>很高的扩展性</li>
-                    </ul>
-                </li>
-                <li><p>不足：</p>
-                    <ul>
-                        <li>没有评论功能</li>
-                        <li>部分页面还未完善</li>
-                    </ul>
-                </li>
-            </ul>
+            <h2>0.3.8a</h2>
+            <li>评论系统基本可用</li>
+            <li>修复若干已知问题</li>
             <h4 id="欢迎各位在github上提出issus，感激不尽">欢迎各位在GitHub上提出issus，感激不尽</h4>
             <br/>
             <br/>
