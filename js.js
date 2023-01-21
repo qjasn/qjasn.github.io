@@ -273,7 +273,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
             if (httpRequest.status == 404) {
                 p = "<ion-content class=\"ion-padding\"><div  class=\"ion-padding\">" + marked(fzfp) + "</div></ion-content>"
             } else {
-                p = "<ion-content class='markdown'>" + marked(httpRequest.responseText) + "<div id=\"gitalk\"></div></ion-content>"
+                p = "<ion-content class='markdown'>" + marked(httpRequest.responseText) + `<div id="valine_`+passage+`"></div></ion-content>"`
                 if (music !== "none") {
                     p = `
                     <ion-content class="markdown">
@@ -288,7 +288,7 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 								</audio>
 							</ion-card-content>
 						</ion-card>` +
-                        p + `</div></ion-content>`
+                        p + `</div><div id="valine_`+passage+`"></div></ion-content>`
                 }
                 number = num
                 Page('passage-show', "to", true)
