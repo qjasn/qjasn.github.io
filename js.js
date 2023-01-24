@@ -69,11 +69,6 @@ customElements.define(
     class PassageShow extends HTMLElement {
         connectedCallback() {
             this.innerHTML = p
-            try {
-                gitalk[gitalkname].render("gitalk");
-            } catch (err) {
-                console.log("无评论选项")
-            }
         }
     }
 )
@@ -109,6 +104,14 @@ customElements.define(
     class NavMoreTalking extends HTMLElement {
         connectedCallback() {
             this.innerHTML = getNav("nav-more-talking")
+        }
+    }
+)
+customElements.define(
+    'nav-gitalk',
+    class NavGitalk extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = getNav("nav-gitalk")
         }
     }
 )
@@ -277,10 +280,9 @@ function passageGet(passage, passagename, music, musicn, des, num) {
             if (httpRequest.status == 404) {
                 p = "<ion-content class=\"ion-padding\"><div  class=\"ion-padding\">" + marked(fzfp) + "</div></ion-content>"
             } else {
-                p = "<ion-content class='markdown'>" + marked(httpRequest.responseText) + `<div id='gitalk'></div></ion-content>`
+                p = marked(httpRequest.responseText)
                 if (music !== "none") {
                     p = `
-                    <ion-content class="markdown">
 					<div>
 						<ion-card>
 							<ion-card-header>
@@ -292,12 +294,18 @@ function passageGet(passage, passagename, music, musicn, des, num) {
 								</audio>
 							</ion-card-content>
 						</ion-card>` +
-                        p + `</div><div id='gitalk'></div></ion-content>`
+                        p + `</div>`
                 }
 
+                if (gitalkname != "update") {
+                    p = p + `<ion-fab onclick='openGitalk()' slot="fixed" vertical="bottom" horizontal="end"><ion-fab-button><ion-icon name="chatbox-ellipses-outline"></ion-icon></ion-fab-button>`
+                }
+                p = "<ion-content class='markdown'>" + p + "</ion-content>"
                 number = num
                 Page('passage-show', "to", true)
-                fadeOut(document.getElementById("progress"))
+                wait(200).finally(() => {
+                    fadeOut(document.getElementById("progress"))
+                })
             }
         }
     }
@@ -361,6 +369,7 @@ function Page(page, type, share) {
 
 //modal
 let currentModal = null;
+let GitalkModal = null;
 
 async function openModal(opts = {}) {
     const modal = await modalController.create({
@@ -370,6 +379,23 @@ async function openModal(opts = {}) {
     await modal.present();
     document.getElementById("title1").innerHTML = title
     currentModal = modal;
+}
+
+async function openGitalkModal(opts = {}) {
+    const modal = await modalController.create({
+        component: 'nav-gitalk',
+        ...opts,
+    });
+    await modal.present();
+    document.getElementById("titleA").innerHTML = "评论"
+    GitalkModal = modal;
+}
+
+async function openGitalk() {
+    openGitalkModal({presentingElement: document.querySelector('ion-nav')}).finally(() => {
+        gitalk[gitalkname].render("gitalk")
+    })
+
 }
 
 /*
@@ -397,6 +423,14 @@ function dismissModal() {
     if (currentModal) {
         currentModal.dismiss().then(() => {
             currentModal = null;
+        });
+    }
+}
+
+function dismissGitModal() {
+    if (GitalkModal) {
+        GitalkModal.dismiss().then(() => {
+            GitalkModal = null;
         });
     }
 }
@@ -531,10 +565,10 @@ window.onresize = function () {
 
 //check update
 function checkupdate() {
-    if (localStorage.update == "038a") {
-        localStorage.update = "038a";
+    if (localStorage.version == "038a") {
+        localStorage.version = "038a";
     } else {
-        localStorage.update = "038a";
+        localStorage.version = "038a";
         toastAlert('dark', 2000,
             '<ion-text>网站已更新</ion-text>', true, 'top', [
                 {

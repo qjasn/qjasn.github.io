@@ -259,7 +259,7 @@
 </script>
 <script id="nav-more-talking" type="text/template">
     <ion-content>
-        <ion-text>正在测试中(nav-more-talking)</ion-text>
+        <ion-text>正在编写中</ion-text>
     </ion-content>
 </script>
 <script id="nav-more" type="text/template">
@@ -309,11 +309,11 @@
             </ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-content style="padding: 10px">
+    <ion-content class="markdown" style="padding: 10px">
         <ion-nav root="passage-show" id="passageNav"
                  style="position: absolute;width: calc(100vw - 8px);left: 8px"></ion-nav>
-    </ion-content>
 
+    </ion-content>
 </script>
 <script id="nav-ipad" type="text/template">
     <ion-header>
@@ -338,7 +338,7 @@
             </ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content class="markdown">
         <ion-nav root="nav-passage" id="passageNav"></ion-nav>
     </ion-content>
 </script>
@@ -346,6 +346,20 @@
     <div style="text-align:center;margin: 0 auto;position: absolute; left: 0;right: 0;top: 50%; transtform: translateY(-50%);font-size: 40px;color:gray">
         Hello world!
     </div>
+</script>
+<script id="nav-gitalk" type="text/template">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start" id="modal-back"
+                         onclick="dismissGitModal()">
+                <ion-text color="primary">关闭</ion-text>
+            </ion-buttons>
+            <ion-title id="titleA" class="ion-padding"></ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <div id="gitalk"></div>
+    </ion-content>
 </script>
 <script id="nav-update" type="text/template">
 
@@ -356,7 +370,7 @@
         </ion-text>
         <div class="markdown">
             <h2>0.3.8a</h2>
-            <li>评论系统基本可用</li>
+            <li>评论系统完善</li>
             <li>修复若干已知问题</li>
             <h4 id="欢迎各位在github上提出issus，感激不尽">欢迎各位在GitHub上提出issus，感激不尽</h4>
             <br/>
